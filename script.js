@@ -33,10 +33,15 @@ console.log(showTypeOf(income));
 console.log(showTypeOf(deposit));
 
 function getTargetMonth() {
-  return Math.ceil(mission / accumulatedMonth);
+  if (accumulatedMonth > 0) {
+    return `Цель будет достигнута примерно через ${Math.ceil(mission / accumulatedMonth)} месяцев`;
+  } else {
+    return 'Ваш доход равен нулю, цель недостижима';
+  }
 }
 
-console.log('Цель будет достигнута примерно через ' + getTargetMonth() + ' месяцев(-а)');
+console.log(getTargetMonth());
+
 
 console.log('Цель -  заработать ' + mission + ' рублей');
 console.log(addExpenses.toLowerCase().split(','));
