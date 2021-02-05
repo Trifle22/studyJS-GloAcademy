@@ -4,24 +4,39 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-let money, income, addExpenses, deposit, mission, period, budgetDay,
+let money, income, addExpenses, deposit, mission, budgetDay,
     expenses1, expenses2, amount1, amount2, accumulatedMonth;
-
-
-income = 'инвестиции';
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-deposit = confirm('Есть ли у вас есть депозит в банке ?');
-mission = 500000;
-
 
 let start = function() {
   do {
     money = prompt('Ваш месячный доход?');
   }
-  while (!isNumber(money) || money < 0);
+  while (!isNumber(money) || money < 0 || money === '' || money === null);
+};
+    
+start();
+
+
+let appData = {
+  budget: money,
+  budgetDay: 0,
+  budgetMonth: 0,
+  expensesMonth: 0,
+  income: {},
+  addIncome: [],
+  expenses: {},
+  addExpenses: [],
+  deposit: false,
+  mission: 500000,
+  period: 3,
+  asking:  function() {
+    let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+    appData.addExpenses = addExpenses.toLowerCase().split(',');
+    appData.deposit = confirm('Есть ли у вас есть депозит в банке ?');
+  },
 };
 
-start();
+
 
 // expenses1 = prompt('Введите обязательную статью расходов');
 // amount1 = +prompt('Во сколько это обойдется?');
@@ -41,7 +56,6 @@ function getExpensesMonth() {
     }
     sum += Number(cash);
   }
-  console.log(expenses);
   return sum;
 }
 
@@ -59,16 +73,9 @@ accumulatedMonth = getAccumulatedMonth();
 
 budgetDay = Math.floor(accumulatedMonth/30);
 
-function showTypeOf(arg) {
-  return typeof arg;
-}
-console.log(showTypeOf(money));
-console.log(showTypeOf(income));
-console.log(showTypeOf(deposit));
-
 function getTargetMonth() {
   if (accumulatedMonth > 0) {
-    return `Цель будет достигнута примерно через ${Math.ceil(mission / accumulatedMonth)} месяцев`;
+    return `Цель будет достигнута примерно через ${Math.ceil(appData.mission / accumulatedMonth)} месяцев(-a)`;
   } else {
     return 'Ваш доход равен нулю, цель недостижима';
   }
@@ -77,8 +84,8 @@ function getTargetMonth() {
 console.log(getTargetMonth());
 
 
-console.log('Цель -  заработать ' + mission + ' рублей');
-console.log(addExpenses.toLowerCase().split(','));
+console.log('Цель -  заработать ' + appData.mission + ' рублей');
+console.log();
 console.log('Бюджет на день равен: ' + budgetDay + 'p.');
 
 
