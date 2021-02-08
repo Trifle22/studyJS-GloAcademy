@@ -50,7 +50,11 @@ let appData = {
     let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'кино,театр');
     appData.addExpenses = addExpenses.toLowerCase().split(',');
     appData.deposit = confirm('Есть ли у вас есть депозит в банке ?');
-
+    for (let i = 0; i < appData.addExpenses.length; i++) {
+      appData.addExpenses[i] = 
+      appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1);
+    }
+    console.log(appData.addExpenses.join(', '));
     let expenseName;
     let expenseCash;
     for (let i = 0; i < 2; i++) {
