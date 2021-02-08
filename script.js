@@ -8,7 +8,7 @@ let money;
 
 let start = function() {
   do {
-    money = prompt('Ваш месячный доход?');
+    money = prompt('Ваш месячный доход?', 90000);
   }
   while (!isNumber(money) || money < 0 || money === '' || money === null);
 };
@@ -25,16 +25,32 @@ let appData = {
   expenses: {},
   addExpenses: [],
   deposit: false,
+  percentDeposit: 0,
+  moneyDeposit: 0,
   mission: 500000,
   period: 3,
+
   asking:  function() {
-    let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+
+    if (confirm('Есть ли у Вас дополнительный заработок')) {
+      let itemIncome;
+      do {
+        itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Инвестиции').trim();
+      } while (isNumber(itemIncome));
+
+      let cashIncome;
+      do {
+        cashIncome = prompt('Сколько на этом зарабатываете?');
+      } while (!isNumber(cashIncome));
+      appData.income[itemIncome] = cashIncome;
+    }
+
+    let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'кино,театр');
     appData.addExpenses = addExpenses.toLowerCase().split(',');
     appData.deposit = confirm('Есть ли у вас есть депозит в банке ?');
     for (let i = 0; i < 2; i++) {
       appData.expenses[prompt('Введите обязательную статью расходов')] = parseInt(prompt('Во сколько это обойдется?'));
     }
-    console.log(appData.expenses);
   },
 
   getExpensesMonth: function () { 
@@ -69,6 +85,16 @@ let appData = {
       return 'Что-то пошло не так';
     }
   },
+
+  getInfoDeposit: function() {
+    if (appData.deposit) {
+      appData.percentDeposit = prompt('Какой годовой процент?', '10');
+      appData.moneyDeposit = prompt('Какая сумма заложена ?', '10000');
+    }
+  },
+  calcSavedMoney: function() {
+    return appData.budgetMonth * appData.period;
+  }
 };
 
 appData.asking();
@@ -87,16 +113,12 @@ console.log('Бюджет на день равен: ' + appData.budgetDay + 'p.'
 
 console.log(appData.getStatusIncome());
 
-console.log('');
-console.log('');
-console.log('');
 
-function message() {
-  console.log(`Наша программа включает в себя данные:`);
-  for (let key in appData) {
-    console.log('Ключ: ' + key + '|значение: ' + appData[key]);
-  }
-}
+// function message() {
+//   console.log(`Наша программа включает в себя данные:`);
+//   for (let key in appData) {
+//     console.log('Ключ: ' + key + '|значение: ' + appData[key]);
+//   }
+// }
 
-message();
-
+// message();
