@@ -1,8 +1,10 @@
 'use strict';
 
+
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
+
 
 let money;
 
@@ -36,11 +38,11 @@ let appData = {
       let itemIncome;
       do {
         itemIncome = prompt('Какой у Вас дополнительный заработок?', 'Инвестиции').trim();
-      } while (isNumber(itemIncome));
+      } while (isNumber(itemIncome) || itemIncome.length < 5);
 
       let cashIncome;
       do {
-        cashIncome = prompt('Сколько на этом зарабатываете?');
+        cashIncome = prompt('Сколько на этом зарабатываете?').trim();
       } while (!isNumber(cashIncome));
       appData.income[itemIncome] = cashIncome;
     }
@@ -48,8 +50,17 @@ let appData = {
     let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'кино,театр');
     appData.addExpenses = addExpenses.toLowerCase().split(',');
     appData.deposit = confirm('Есть ли у вас есть депозит в банке ?');
+
+    let expenseName;
+    let expenseCash;
     for (let i = 0; i < 2; i++) {
-      appData.expenses[prompt('Введите обязательную статью расходов')] = parseInt(prompt('Во сколько это обойдется?'));
+      do {
+        expenseName = prompt('Введите обязательную статью расходов').trim();
+      } while (isNumber(expenseName) || expenseName.length < 5);
+      do {
+        expenseCash = parseFloat(prompt('Во сколько это обойдется?').trim());
+      } while (!isNumber(expenseCash));
+      appData.expenses[expenseName] = expenseCash;
     }
   },
 
