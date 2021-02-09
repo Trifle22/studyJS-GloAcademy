@@ -59,11 +59,21 @@ let appData = {
     let expenseCash;
     for (let i = 0; i < 2; i++) {
       do {
-        expenseName = prompt('Введите обязательную статью расходов').trim();
-      } while (isNumber(expenseName) || expenseName.length < 5);
+        expenseName = prompt('Введите обязательную статью расходов');
+      } while (
+        expenseName === null || 
+        isNumber(expenseName) || 
+        expenseName.length < 5 ||
+        !expenseName.trim());
       do {
-        expenseCash = parseFloat(prompt('Во сколько это обойдется?').trim());
-      } while (!isNumber(expenseCash));
+        expenseCash = parseFloat(prompt('Во сколько это обойдется?'));
+      } while (
+        expenseCash === null ||
+        !isNumber(expenseCash) ||
+        !expenseName.toString().trim()
+        );
+        expenseName.trim();
+        expenseCash = parseFloat(expenseCash.toString().trim());
       appData.expenses[expenseName] = expenseCash;
     }
   },
