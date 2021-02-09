@@ -51,6 +51,7 @@ let appData = {
     appData.addExpenses = addExpenses.toLowerCase().split(',');
     appData.deposit = confirm('Есть ли у вас есть депозит в банке ?');
     for (let i = 0; i < appData.addExpenses.length; i++) {
+      appData.addExpenses[i] = appData.addExpenses[i].trim();
       appData.addExpenses[i] = 
       appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1);
     }
