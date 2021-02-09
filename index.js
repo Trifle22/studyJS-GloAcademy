@@ -1,5 +1,25 @@
 'use strict';
 
+let buttonStart = document.getElementById('start');
+let buttonIncomeAdd = document.getElementsByTagName('button')[0];
+let buttonExpensesAdd = document.getElementsByTagName('button')[1];
+let depositCheck = document.querySelector('#deposit-check');
+let additionalIncomeInputs = document.querySelectorAll('.additional_income-item');
+let budgetMonthValue = document.getElementsByClassName('budget_month-value');
+let budgetDayValue = document.getElementsByClassName('budget_day-value');
+let expensesMonthValue = document.getElementsByClassName('expenses_month-value');
+let additionalIncomeValue = document.getElementsByClassName('additional_income-value');
+let additionalExpensesValue = document.getElementsByClassName('additional_expenses-value');
+let incomePeriodValue = document.getElementsByClassName('income_period-value');
+let targetMonthValue = document.getElementsByClassName('target_month-value');
+let salaryAmount = document.querySelector('.salary-amount');
+let incomeTitleElement = document.querySelector('.income-title');
+let incomeAmountElement = document.querySelector('.income-amount');
+let expensesTitleElement = document.querySelector('.expenses-title');
+let expensesAmountElement = document.querySelector('.expenses-amount');
+let additionalExpensesItem = document.querySelector('.additional_expenses-item');
+let targetAmountElement = document.querySelector('.target-amount');
+let periodSelectElement = document.querySelector('.period-select');
 
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -147,12 +167,3 @@ console.log('Бюджет на день равен: ' + appData.budgetDay + 'p.'
 
 console.log(appData.getStatusIncome());
 
-
-// function message() {
-//   console.log(`Наша программа включает в себя данные:`);
-//   for (let key in appData) {
-//     console.log('Ключ: ' + key + '|значение: ' + appData[key]);
-//   }
-// }
-
-// message();
