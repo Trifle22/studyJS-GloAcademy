@@ -21,6 +21,8 @@ let targetAmountElement = document.querySelector('.target-amount');
 let periodSelectElement = document.querySelector('.period-select');
 let periodAmount = document.querySelector('.period-amount');
 let incomeItem = document.querySelectorAll('.income-items');
+let textInputs = document.querySelectorAll('input[placeholder="Наименование"]');
+let numInputs = document.querySelectorAll('input[placeholder="Сумма"]');
 
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -41,16 +43,15 @@ let appData = {
   moneyDeposit: 0,
   period: 3,
 
-  start : function () {
-    appData.budget = parseFloat(salaryAmount.value);
-    appData.getExpenses();
-    appData.getIncome();
-    appData.getExpensesMonth();
-    appData.getAddExpenses();
-    appData.getAddIncome();
-    appData.getBudget();
-
-    appData.showResult();
+  start: function () {
+          appData.budget = parseFloat(salaryAmount.value);
+          appData.getExpenses();
+          appData.getIncome();
+          appData.getExpensesMonth();
+          appData.getAddExpenses();
+          appData.getAddIncome();
+          appData.getBudget();
+          appData.showResult();
   },
 
   showResult: function() {
@@ -190,6 +191,30 @@ buttonIncomeAdd.addEventListener('click', appData.addIncomeBlock);
 periodSelectElement.addEventListener('input', function() {
   periodAmount.textContent = periodSelectElement.value;
 });
+
+textInputs.forEach(function(item) {
+  item.addEventListener('change', function() {
+    if (isNumber(item.value.trim())) {
+      item.style.border = '2px solid red';
+      alert('Введите корректные данные');
+    } else {
+      item.style.border = '2px solid green';
+    }
+  });
+});
+
+numInputs.forEach(function(item) {
+  item.addEventListener('change', function() {
+    if (!isNumber(item.value.trim())) {
+      item.style.border = '2px solid red';
+      alert('Введите корректные данные');
+    } else {
+      item.style.border = '2px solid green';
+    }
+  });
+});
+
+
+
 appData.getInfoDeposit();
 appData.budgetDay = Math.floor(appData.budgetMonth/30);
-
