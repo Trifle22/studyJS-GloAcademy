@@ -26,8 +26,6 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-
-
 let appData = {
   budget: 0,
   budgetDay: 0,
@@ -44,10 +42,6 @@ let appData = {
   period: 3,
 
   start : function () {
-    if (salaryAmount.value === '') {
-      alert('Ошибка, поле "месячный доход" должно быть заполнено!');
-      return;
-    }
     appData.budget = parseFloat(salaryAmount.value);
     appData.getExpenses();
     appData.getIncome();
@@ -60,6 +54,10 @@ let appData = {
   },
 
   showResult: function() {
+    periodSelectElement.addEventListener('input', function() {
+      incomePeriodValue.value = appData.budgetMonth * parseInt(periodSelectElement.value);
+    });
+
     budgetMonthValue.value = appData.budgetMonth;
     budgetDayValue.value = appData.budgetDay;
     expensesMonthValue.value = appData.expensesMonth;
@@ -173,6 +171,10 @@ let appData = {
     return appData.budgetMonth * periodSelectElement.value;
   }
 };
+
+if (salaryAmount.value.trim() === '') {
+  buttonStart.disabled = true;
+}
 
 buttonStart.addEventListener('click', appData.start);
 buttonExpensesAdd.addEventListener('click', appData.addExpensesBlock);
