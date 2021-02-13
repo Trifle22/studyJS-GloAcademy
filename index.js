@@ -23,6 +23,7 @@ let periodAmount = document.querySelector('.period-amount');
 let incomeItem = document.querySelectorAll('.income-items');
 let textInputs = document.querySelectorAll('input[placeholder="Наименование"]');
 let numInputs = document.querySelectorAll('input[placeholder="Сумма"]');
+let regex = /^[?!,.а-яА-ЯёЁ]/;
 
 let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -194,7 +195,7 @@ periodSelectElement.addEventListener('input', function() {
 
 textInputs.forEach(function(item) {
   item.addEventListener('change', function() {
-    if (isNumber(item.value.trim())) {
+    if (isNumber(item.value.trim()) || !item.value.trim().match(regex)) {
       item.style.border = '2px solid red';
       alert('Введите корректные данные');
     } else {
