@@ -71,24 +71,64 @@ let appData = {
 
   addExpensesBlock: function() {
     let cloneExpensesItem = expensesItems[0].cloneNode(true);
-    cloneExpensesItem.querySelector('.expenses-title').value = '';
-    cloneExpensesItem.querySelector('.expenses-amount').value = '';
+    const newExpensesTextInput = cloneExpensesItem.querySelector('.expenses-title');
+    const newExpensesNumInput = cloneExpensesItem.querySelector('.expenses-amount');
+    newExpensesTextInput.value = '';
+    newExpensesNumInput.value = '';
+    newExpensesTextInput.style.border = '';
+    newExpensesNumInput.style.border = '';
     expensesItems[0].parentNode.insertBefore(cloneExpensesItem, buttonExpensesAdd);
     expensesItems = document.querySelectorAll('.expenses-items');
     if (expensesItems.length === 3) {
       buttonExpensesAdd.style.display = 'none';
     }
+    newExpensesTextInput.addEventListener('change', function() {
+      if (isNumber(newExpensesTextInput.value.trim()) || !newExpensesTextInput.value.trim().match(regex)) {
+        newExpensesTextInput.style.border = '2px solid red';
+        alert('Введите корректные данные');
+      } else {
+        newExpensesTextInput.style.border = '2px solid green';
+      }
+    });
+    newExpensesNumInput.addEventListener('change', function() {
+      if (!isNumber(newExpensesNumInput.value.trim())) {
+        newExpensesNumInput.style.border = '2px solid red';
+        alert('Введите корректные данные');
+      } else {
+        newExpensesNumInput.style.border = '2px solid green';
+      }
+    });
   },
 
   addIncomeBlock: function() {
     let cloneIcomeItem = incomeItem[0].cloneNode(true);
-    cloneIcomeItem.querySelector('.income-title').value = '';
-    cloneIcomeItem.querySelector('.income-amount').value = '';
+    const newIncomeTextInput = cloneIcomeItem.querySelector('.income-title');
+    const newIncomeNumInput = cloneIcomeItem.querySelector('.income-amount');
+    newIncomeTextInput.value = '';
+    newIncomeNumInput.value = '';
+    newIncomeTextInput.style.border = '';
+    newIncomeNumInput.style.border = '';
     incomeItem[0].parentNode.insertBefore(cloneIcomeItem, buttonIncomeAdd);
     incomeItem = document.querySelectorAll('.income-items');
     if (incomeItem.length === 3) {
       buttonIncomeAdd.style.display = 'none';
     }
+    newIncomeTextInput.addEventListener('change', function() {
+      if (isNumber(newIncomeTextInput.value.trim()) || !newIncomeTextInput.value.trim().match(regex)) {
+        newIncomeTextInput.style.border = '2px solid red';
+        alert('Введите корректные данные');
+      } else {
+        newIncomeTextInput.style.border = '2px solid green';
+      }
+    });
+    newIncomeNumInput.addEventListener('change', function() {
+      if (!isNumber(newIncomeNumInput.value.trim())) {
+        newIncomeNumInput.style.border = '2px solid red';
+        alert('Введите корректные данные');
+      } else {
+        newIncomeNumInput.style.border = '2px solid green';
+      }
+    });
   },
 
 
