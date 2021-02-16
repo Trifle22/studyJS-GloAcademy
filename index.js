@@ -30,6 +30,7 @@ let isNumber = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
+
 let appData = {
   budget: 0,
   budgetDay: 0,
@@ -46,10 +47,8 @@ let appData = {
   period: 3,
 
   start: function () {
-    numInputs.forEach(function (item) {
-      item.disabled = true;
-    });
-    textInputs.forEach(function (item) {
+    let allInputs = document.querySelectorAll("input[type='text']");
+    allInputs.forEach(function (item) {
       item.disabled = true;
     });
           appData.budget = parseFloat(salaryAmount.value);
@@ -67,13 +66,53 @@ let appData = {
     buttonStart.style.display = 'block';
     let allInputs = document.querySelectorAll("input[type='text']");
     allInputs.forEach(function (item) {
-      if (!item.classList.contains('result-total')) {
-        item.disabled = false;
-        item.value = '';
-        item.style.border = '';
+      item.value = '';
+      item.disabled = false;
+      item.style.border = '';
+      if (item.classList.contains('result-total')) {
+        item.disabled = true;
       }
     });
+    incomePeriodValue.value = 0;
+    periodSelectElement.value = 1;
+    periodAmount.textContent = '1';
+    appData.budget =  0;
+    appData.budgetDay =  0;
+    appData.budgetMonth =  0;
+    appData.expensesMonth =  0;
+    appData.income =  {};
+    appData.incomeMonth =  0;
+    appData.addIncome =  [];
+    appData.expenses =  {};
+    appData.addExpenses =  [];
+    appData.deposit = false;
+    appData.percentDeposi =  0;
+    appData.moneyDeposit = 0;
+    appData.period =  3;
+
+    function removeInputs() {
+      let expensesInputs = document.querySelectorAll('.expenses-items');
+      if (expensesInputs.length > 1) {
+        expensesInputs.forEach(function(item, i) {
+          if (i > 0) {
+            item.style.display = 'none';
+          }
+        });
+      }
+      buttonExpensesAdd.style.display = 'block';
+      let incomeInputs = document.querySelectorAll('.income-items');
+      if (incomeInputs.length > 1) {
+        incomeInputs.forEach(function(item,i) {
+          if (i > 0) {
+            item.style.display = 'none';
+          }
+        });
+      }
+      buttonIncomeAdd.style.display = 'block';
+    }
+    removeInputs();
   },
+
 
   showResult: function() {
     periodSelectElement.addEventListener('input', function() {
