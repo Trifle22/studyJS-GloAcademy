@@ -8,6 +8,11 @@ function DomElement(selector, height, width, bg, fontSize) {
   this.fontSize = fontSize;
 }
 
+const elementDiv = new DomElement('.block', '20px', '200px', '#98FB98', '15px');
+
+let elementParagraph = new DomElement('#best', '20px', '300px', '#DC143C', '11px');
+
+
 DomElement.prototype.createElement = function() {
   if (this.selector[0] === '.') {
     document.body.insertAdjacentHTML('beforeend', `<div class="${this.selector.slice(1)}"></div>`);
@@ -30,10 +35,8 @@ DomElement.prototype.createElement = function() {
   }
 };
 
-const elementDiv = new DomElement('.block', '20px', '200px', '#98FB98', '15px');
 elementDiv.createElement();
 
-let elementParagraph = new DomElement('#best', '20px', '300px', '#DC143C', '11px');
 elementParagraph.createElement();
 
 
