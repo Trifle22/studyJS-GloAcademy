@@ -1,11 +1,10 @@
 'use strict';
 
-function DomElement(selector, height, width, bg, fontSize) {
+function DomElement(selector, height, width, bg) {
   this.selector = selector;
   this.height = height;
   this.width = width;
   this.bg = bg;
-  this.fontSize = fontSize;
 }
 
 DomElement.prototype.createElement = function() {
@@ -15,25 +14,32 @@ DomElement.prototype.createElement = function() {
     document.body.insertAdjacentHTML('beforeend', `<p id="${this.selector.slice(1)}"></p>`);
   }
 };
+let square = new DomElement('.square', '100px', '100px', '#16FB08');
 
-let elementDiv = new DomElement('.block', '20px', '200px', '#98FB98', '15px');
-elementDiv.createElement();
-let block = document.querySelector('.block');
-block.style.cssText = `
-height: ${elementDiv.height}; 
-width: ${elementDiv.width};
-background-color: ${elementDiv.bg};
-font-size: ${elementDiv.fontSize};`;
-block.textContent = 'Это блок с классом block';
+document.addEventListener('DOMContentLoaded',() => {
+  square.createElement();
+  const ourSquare = document.querySelector('.square');
+  ourSquare.style.cssText = `
+  width: ${square.width};
+  height: ${square.height};
+  background-color: ${square.bg};
+  position: absolute;
+  top : 100;
+  left: 100;
+  right: 100;
+  bottom 100;
+  `;
+  document.addEventListener('keydown', (e) => {
+    let computedStyle = getComputedStyle(ourSquare);
+    if (e.key === 'ArrowUp') {
+      ourSquare.style.top = `${parseFloat(computedStyle.top) - 10}px`;
+    } else if (e.key === 'ArrowDown') {
+      ourSquare.style.bottom = `${parseFloat(computedStyle.bottom) - 10}px`;
+    } else if (e.key === 'ArrowLeft') {
+      ourSquare.style.left = `${parseFloat(computedStyle.left) - 10}px`;
+    } else if (e.key === 'ArrowRight') {
+      ourSquare.style.right = `${parseFloat(computedStyle.right) - 10}px`;
+    }
+  });
 
-let elementParagraph = new DomElement('#best', '20px', '300px', '#DC143C', '11px');
-elementParagraph.createElement();
-
-let paragraph = document.querySelector('#best');
-paragraph.style.cssText = `
-height: ${elementParagraph.height}; 
-width: ${elementParagraph.width};
-background-color: ${elementParagraph.bg};
-font-size: ${elementParagraph.fontSize};`;
-paragraph.textContent = 'Это параграф с id best';
-
+});
