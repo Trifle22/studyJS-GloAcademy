@@ -291,9 +291,9 @@ class AppData {
       depositPercent.disabled = false;
       depositPercent.value = '';
       depositPercent.addEventListener('change', () => {
-        if (isNumber(depositPercent.value.trim()) ||
-        parseFloat(depositPercent.value.trim()) > 0 || 
-        parseFloat(depositPercent.value.trim()) < 100 ||
+        if (isNumber(depositPercent.value.trim()) &&
+        parseFloat(depositPercent.value.trim()) > 0 &&
+        parseFloat(depositPercent.value.trim()) < 100 &&
         depositPercent.value.trim() !== '') {
           this.percentDeposit = depositPercent.value;
         } else {
