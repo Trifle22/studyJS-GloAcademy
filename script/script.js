@@ -1,6 +1,6 @@
+
+
 /* eslint-disable no-trailing-spaces */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
 window.addEventListener('DOMContentLoaded', () => {
   const deadline = '23 february 2021';
   
@@ -8,7 +8,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const timerMinutes = document.querySelector('#timer-minutes');
   const timerSeconds = document.querySelector('#timer-seconds');
 
-  //countTimer function
+  countTimer(deadline);
+
   function countTimer(deadline) {
 
     function getTimeRemaining() {
