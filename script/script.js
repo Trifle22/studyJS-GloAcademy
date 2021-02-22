@@ -2,7 +2,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '23 february 2021';
+  const deadline = '24 february 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -39,9 +39,11 @@ window.addEventListener('DOMContentLoaded', () => {
       if (timer.secondsRemaining < 10) {
         timer.secondsRemaining = '0' + timer.secondsRemaining.toString();
       }
-      
+      timerHours.classList.toggle('timer-animated');
       timerHours.textContent = timer.hoursRemaining;
+      timerMinutes.classList.toggle('timer-animated');
       timerMinutes.textContent = timer.minutesRemaining;
+      timerSeconds.classList.toggle('timer-animated');
       timerSeconds.textContent = timer.secondsRemaining;
     }
     updateClock();
