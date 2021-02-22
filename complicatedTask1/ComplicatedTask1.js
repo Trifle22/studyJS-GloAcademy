@@ -16,8 +16,7 @@ const debounceFunc = func => {
   };
 };
 
-const debounceWriteText = debounceFunc(writeText);
+const debounceWriteTextFunc = debounceFunc(writeText);
 
 
-input.addEventListener('input', debounceWriteText);
-
+input.addEventListener('input', debounceWriteTextFunc);
