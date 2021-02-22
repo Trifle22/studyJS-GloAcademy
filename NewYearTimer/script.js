@@ -1,3 +1,8 @@
+const helloMessageElement = document.querySelector('.hello-message');
+const weekDayElement = document.querySelector('.week-day');
+const nowTimeElement = document.querySelector('.now-time');
+const daysToNewYearElement = document.querySelector('.days-to-new-year');
+
 function writeTime() {
   const week = {
     0: 'Воскресение',
@@ -15,18 +20,16 @@ function writeTime() {
   const newYearDate = new Date('31 december 2021').getTime();
   let timesOfDay;
   if (now.getHours() < 12) {
-    timesOfDay = 'утро';
+    timesOfDay = 'Доброе утро';
   } else if (now.getHours() > 12 && now.getHours() < 18) {
-    timesOfDay = 'день'
+    timesOfDay = 'Добрый день';
   } else if (now.getHours() > 18) {
-    timesOfDay = 'вечер'
+    timesOfDay = 'Добрый вечер';
   }
-  console.log(`
-  Добрый ${timesOfDay}
-  Сегодня: ${week[weekDay]}
-  Текущее время: ${nowTime}
-  До нового года осталось ${Math.floor((newYearDate - now.getTime()) / 1000 / 60 / 60 / 24)} дней`
-  );
+  helloMessageElement.textContent = timesOfDay;
+  weekDayElement.textContent = week[weekDay];
+  nowTimeElement.textContent = nowTime;
+  daysToNewYearElement.textContent = Math.floor((newYearDate - now.getTime()) / 1000 / 60 / 60 / 24);
 }
 
-writeTime();
+setInterval(writeTime, 1000);
