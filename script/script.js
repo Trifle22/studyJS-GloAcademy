@@ -39,6 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (timer.secondsRemaining < 10) {
         timer.secondsRemaining = '0' + timer.secondsRemaining.toString();
       }
+      
       timerHours.classList.toggle('timer-animated');
       timerHours.textContent = timer.hoursRemaining;
       timerMinutes.classList.toggle('timer-animated');

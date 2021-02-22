@@ -9,6 +9,7 @@
   }
 };
 
+
 #timer-seconds, #timer-hours, #timer-minutes {
   transition:all .6s ease-in-out;
   animation: fadeInUp 3.5s
@@ -16,3 +17,4 @@
 .timer-animated {
   animation: fadeInUp 3.5s
 }
+
