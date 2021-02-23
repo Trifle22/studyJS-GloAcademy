@@ -66,18 +66,18 @@ window.addEventListener('DOMContentLoaded', () => {
     const menuItems = menu.querySelectorAll('ul>li');
 
 
-    const handleMenu = () => {
+    const handlerMenu = () => {
       if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
         menu.style.transform = `translate(0)`;
       } else {
         menu.style.transform = `translate(-100%)`;        
       }
     };
-    btnMenu.addEventListener('click', handleMenu);
-    closeBtn.addEventListener('click', handleMenu);
-    
+    btnMenu.addEventListener('click', handlerMenu);
+    closeBtn.addEventListener('click', handlerMenu);
+
     menuItems.forEach(item => {
-      item.addEventListener('click', handleMenu);
+      item.addEventListener('click', handlerMenu);
     });
 
   };
