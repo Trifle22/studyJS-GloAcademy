@@ -17,7 +17,7 @@ function writeTime() {
   const now = new Date();
   const weekDay = now.getUTCDay();
   const nowTime = now.toLocaleTimeString('en');
-  const newYearDate = new Date('31 december 2021').getTime();
+  const newYearDate = new Date('1 january 2022').getTime();
   let timesOfDay;
   if (now.getHours() < 12) {
     timesOfDay = 'Доброе утро';
@@ -29,7 +29,7 @@ function writeTime() {
   helloMessageElement.textContent = timesOfDay;
   weekDayElement.textContent = week[weekDay];
   nowTimeElement.textContent = nowTime;
-  daysToNewYearElement.textContent = Math.floor((newYearDate - now.getTime()) / 1000 / 60 / 60 / 24);
+  daysToNewYearElement.textContent = Math.ceil((newYearDate - now.getTime()) / 1000 / 60 / 60 / 24);
 }
 
 setInterval(writeTime, 1000);
