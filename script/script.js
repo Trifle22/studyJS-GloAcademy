@@ -59,4 +59,27 @@ window.addEventListener('DOMContentLoaded', () => {
     clearInterval(intervalTimer);
   }
 
+  const toggleMenu = () => {
+    const btnMenu = document.querySelector('.menu');
+    const menu = document.querySelector('menu');
+    const closeBtn = document.querySelector('.close-btn');
+    const menuItems = menu.querySelectorAll('ul>li');
+
+
+    const handleMenu = () => {
+      if (!menu.style.transform || menu.style.transform === `translate(-100%)`) {
+        menu.style.transform = `translate(0)`;
+      } else {
+        menu.style.transform = `translate(-100%)`;        
+      }
+    };
+    btnMenu.addEventListener('click', handleMenu);
+    closeBtn.addEventListener('click', handleMenu);
+    
+    menuItems.forEach(item => {
+      item.addEventListener('click', handleMenu);
+    });
+
+  };
+  toggleMenu();
 });
