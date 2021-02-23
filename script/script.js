@@ -3,7 +3,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '24 february 2021';
+  const deadline = '25 february 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -59,6 +59,20 @@ window.addEventListener('DOMContentLoaded', () => {
     timerSeconds.style.color = 'red';
     clearInterval(intervalTimer);
   }
+
+  function runAnimation() {
+    timerSeconds.style.animation = 'animationTimer 1s';
+  }
+
+  function loopAnimation() {
+    runAnimation();
+    setTimeout(() => {
+      timerSeconds.style.animation = 'animationTimer 1s';
+      requestAnimationFrame(loopAnimation);
+    }, 1000);
+  }
+
+  loopAnimation();
 
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu');
