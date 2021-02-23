@@ -40,11 +40,8 @@ window.addEventListener('DOMContentLoaded', () => {
         timer.secondsRemaining = '0' + timer.secondsRemaining.toString();
       }
       
-      timerHours.classList.toggle('timer-animated');
       timerHours.textContent = timer.hoursRemaining;
-      timerMinutes.classList.toggle('timer-animated');
       timerMinutes.textContent = timer.minutesRemaining;
-      timerSeconds.classList.toggle('timer-animated');
       timerSeconds.textContent = timer.secondsRemaining;
     }
     updateClock();
