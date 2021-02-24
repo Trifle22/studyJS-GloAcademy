@@ -78,20 +78,46 @@ window.addEventListener('DOMContentLoaded', () => {
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu');
     const menu = document.querySelector('menu');
-    const closeBtn = document.querySelector('.close-btn');
-    const menuItems = menu.querySelectorAll('ul>li');
 
 
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
-    btnMenu.addEventListener('click', handlerMenu);
-    closeBtn.addEventListener('click', handlerMenu);
 
-    menuItems.forEach(item => item.addEventListener('click', handlerMenu));
+    btnMenu.addEventListener('click', handlerMenu);
+
+    menu.addEventListener('click', event => {
+      const target = event.target;
+      console.dir(target);
+      if (target.className === ('close-btn')) {
+        handlerMenu();
+      }
+      if (target.closest('ul>li>a')) {
+        handlerMenu();
+      }
+    });
 
   };
+
   toggleMenu();
+
+  function scrollToAnchors() {
+    const anchors = document.querySelectorAll('a[href*="#"]');
+    anchors.forEach(item => {
+      item.addEventListener('click', event => {
+        event.preventDefault();
+        const anchorID = item.getAttribute('href').substr(1);
+
+        document.getElementById(anchorID).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    });
+  }
+
+  scrollToAnchors();
+
 
   //popup 
 
@@ -136,24 +162,6 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   togglePopup();
-
-  function scrollToAnchors() {
-    const anchors = document.querySelectorAll('a[href*="#"]');
-    anchors.forEach(item => {
-      item.addEventListener('click', event => {
-        event.preventDefault();
-        const anchorID = item.getAttribute('href').substr(1);
-
-        document.getElementById(anchorID).scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      });
-    });
-  }
-
-  scrollToAnchors();
-
 
   //tabs 
 
