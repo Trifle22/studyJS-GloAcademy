@@ -4,7 +4,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '25 february 2021';
+  const deadline = '26 february 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -76,26 +76,24 @@ window.addEventListener('DOMContentLoaded', () => {
   loopAnimation();
 
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu');
     const menu = document.querySelector('menu');
-
 
     const handlerMenu = () => {
       menu.classList.toggle('active-menu');
     };
 
-    btnMenu.addEventListener('click', handlerMenu);
 
-    menu.addEventListener('click', event => {
+    document.addEventListener('click', event => {
       const target = event.target;
-      console.dir(target);
-      if (target.className === ('close-btn')) {
+      if (target.closest('.menu')) {
         handlerMenu();
-      }
-      if (target.closest('ul>li>a')) {
+      } else if (target.closest('.close-btn')) {
+        handlerMenu();
+      } else if (target.closest('ul>li>a')) {
         handlerMenu();
       }
     });
+
 
   };
 
