@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-inner-declarations */
 
 
@@ -97,7 +98,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const togglePopup = () => {
     const popup = document.querySelector('.popup');
     const popupBtn = document.querySelectorAll('.popup-btn');
-    const popupClose = document.querySelector('.popup-close');
 
     popupBtn.forEach(item => {
       item.addEventListener('click', () => {
@@ -122,30 +122,73 @@ window.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    popupClose.addEventListener('click', () => {
-      popup.style.display = 'none';
+    popup.addEventListener('click', event => {
+      let target = event.target;
+      if (target.classList.contains('popup-close')) {
+        popup.style.display = 'none';
+      } else {
+        target = target.closest('.popup-content');
+        if (!target) {
+          popup.style.display = 'none';
+        }
+      }
     });
-
-    function scrollToAnchors() {
-      const anchors = document.querySelectorAll('a[href*="#"]');
-      anchors.forEach(item => {
-        item.addEventListener('click', event => {
-          event.preventDefault();
-          const anchorID = item.getAttribute('href').substr(1);
-
-          document.getElementById(anchorID).scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-          });
-        });
-      });
-    }
-
-    scrollToAnchors();
   };
 
-
   togglePopup();
+
+  function scrollToAnchors() {
+    const anchors = document.querySelectorAll('a[href*="#"]');
+    anchors.forEach(item => {
+      item.addEventListener('click', event => {
+        event.preventDefault();
+        const anchorID = item.getAttribute('href').substr(1);
+
+        document.getElementById(anchorID).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    });
+  }
+
+  scrollToAnchors();
+
+
+  //tabs 
+
+  const tabs = () => {
+    const tabHeader = document.querySelector('.service-header'),
+      tab = tabHeader.querySelectorAll('.service-header-tab'),
+      tabContent = document.querySelectorAll('.service-tab');
+
+    const toggleTabContent = index => {
+      for (let i = 0; i < tabContent.length; i++) {
+        if (index === i) {
+          tab[i].classList.add('active');
+          tabContent[i].classList.remove('d-none');
+        } else {
+          tab[i].classList.remove('active');
+          tabContent[i].classList.add('d-none');
+        }
+      }
+    };
+
+    tabHeader.addEventListener('click', event => {
+      let target = event.target;
+      target = target.closest('.service-header-tab');
+      if (target) {
+        tab.forEach((item, i) => {
+          if (item === target) {
+            toggleTabContent(i);
+          }
+        }); 
+      }
+      
+    });
+  };
+
+  tabs();
 
 
 

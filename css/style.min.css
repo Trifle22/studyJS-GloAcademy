@@ -366,10 +366,12 @@ main a {
   margin: 0;
   font-weight: 400;
   color: #19b5fe;
-  font-size: 2rem
+  font-size: 2rem;
+  transition: all 0.5s ease-in-out;
 }
 
 .service-header-tab.active {
+  transition: all 0.8s ease-in-out;
   background-color: #19b5fe;
   border-radius: 3rem;
   color: #fff !important
