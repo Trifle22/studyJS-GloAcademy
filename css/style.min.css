@@ -158,12 +158,15 @@ body .close-btn {
   text-align: center;
   width: 3rem;
   height: 3rem;
-  color: #19b5fe
+  color: #19b5fe;
+  background-color: transparent;
+  border: none;
 }
 
 body .close-btn:hover {
   -webkit-transform: rotate(180deg);
-  transform: rotate(180deg)
+  transform: rotate(180deg);
+  background-color: transparent;
 }
 
 body .underline {

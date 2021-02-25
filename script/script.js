@@ -75,6 +75,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
   loopAnimation();
 
+  function scrollToAnchors() {
+    const anchors = document.querySelectorAll('a[href*="#"]');
+    anchors.forEach(item => {
+      item.addEventListener('click', event => {
+        event.preventDefault();
+        const anchorID = item.getAttribute('href').substr(1);
+        document.getElementById(anchorID).scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      });
+    });
+  }
+
+  scrollToAnchors();
+
   const toggleMenu = () => {
     const menu = document.querySelector('menu');
 
@@ -94,27 +110,10 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-
   };
 
   toggleMenu();
 
-  function scrollToAnchors() {
-    const anchors = document.querySelectorAll('a[href*="#"]');
-    anchors.forEach(item => {
-      item.addEventListener('click', event => {
-        event.preventDefault();
-        const anchorID = item.getAttribute('href').substr(1);
-
-        document.getElementById(anchorID).scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-      });
-    });
-  }
-
-  scrollToAnchors();
 
 
   //popup 
