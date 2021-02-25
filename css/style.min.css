@@ -460,6 +460,10 @@ main a {
   -webkit-transition: background-color .2s;
   transition: background-color .2s
 }
+#arrow-left, #arrow-right {
+  border: none;
+  outline: none;
+}
 
 .portfolio-btn.prev {
   left: 20px;
