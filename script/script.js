@@ -98,7 +98,7 @@ window.addEventListener('DOMContentLoaded', () => {
       menu.classList.toggle('active-menu');
     };
 
-
+    // делегирование
     document.addEventListener('click', event => {
       const target = event.target;
       if (target.closest('.menu')) {
