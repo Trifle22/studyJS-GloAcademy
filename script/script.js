@@ -107,6 +107,8 @@ window.addEventListener('DOMContentLoaded', () => {
         handlerMenu();
       } else if (target.closest('ul>li>a')) {
         handlerMenu();
+      } else if (!target.closest('.active-menu')) {
+        handlerMenu();
       }
     });
 
