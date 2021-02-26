@@ -66,6 +66,7 @@ class Todo {
   }
 
   handler() {
+    // todoList listener
     this.todoList.addEventListener('click', event => {
       const target = event.target;
       if (target.closest('button.todo-complete')) {
@@ -78,8 +79,19 @@ class Todo {
             this.render();
           }
         });
+      } else if (target.closest('.todo-remove')) {
+        const items = JSON.parse(localStorage.getItem('toDoList'));
+        const todoItem = target.closest('.todo-item');
+        items.forEach((item, i) => {
+          if (item[0] === todoItem.key) {
+            delete items[i];
+            this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
+            this.render();
+          }
+        });
       }
     });
+    //completed listener
     this.todoCompleted.addEventListener('click', event => {
       const target = event.target;
       if (target.closest('button.todo-complete')) {
@@ -89,6 +101,16 @@ class Todo {
           if (item[0] === todoItem.key) {
             item[1].todoCompleted = false;
             this.todoData = new Map(items);
+            this.render();
+          }
+        });
+      } else if (target.closest('.todo-remove')) {
+        const items = JSON.parse(localStorage.getItem('toDoList'));
+        const todoItem = target.closest('.todo-item');
+        items.forEach((item, i) => {
+          if (item[0] === todoItem.key) {
+            delete items[i];
+            this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
             this.render();
           }
         });
