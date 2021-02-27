@@ -21,6 +21,12 @@ class Todo {
 
   createItem(todo) {
     const li = document.createElement('li');
+    const now = Date.now();
+    if (now - todo.clickTimeCompleted <= 2) {
+      li.classList.add('todo-item-animated');
+    } else {
+      li.classList.remove('todo-item-animated');
+    }
     li.classList.add('todo-item');
     li.key = todo.key;
     li.insertAdjacentHTML('beforeend', `
@@ -45,6 +51,7 @@ class Todo {
         value: this.input.value,
         todoCompleted: false,
         key: this.generateKey(),
+        clickTimeCompleted: 0,
       };
       this.todoData.set(newTodo.key, newTodo);
       this.render();
@@ -57,13 +64,10 @@ class Todo {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 
-  deleteItem() {
+  animatedItem() {
 
   }
 
-  completeItem() {
-
-  }
 
   handler() {
     // todoList listener
@@ -74,6 +78,7 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach(item => {
           if (item[0] === todoItem.key) {
+            item[1].clickTimeCompleted = Date.now();
             item[1].todoCompleted = true;
             this.todoData = new Map(items);
             this.render();
@@ -84,9 +89,12 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach((item, i) => {
           if (item[0] === todoItem.key) {
+            this.todoList.children[i].classList.add('todo-item-delete-animated');
             delete items[i];
             this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
-            this.render();
+            setTimeout(() => {
+              this.render();
+            }, 1980);
           }
         });
       }
@@ -99,6 +107,7 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach(item => {
           if (item[0] === todoItem.key) {
+            item[1].clickTimeCompleted = Date.now();
             item[1].todoCompleted = false;
             this.todoData = new Map(items);
             this.render();
@@ -109,9 +118,12 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach((item, i) => {
           if (item[0] === todoItem.key) {
+            this.todoCompleted.children[i].classList.add('todo-item-delete-animated');
             delete items[i];
             this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
-            this.render();
+            setTimeout(() => {
+              this.render();
+            }, 1980);
           }
         });
       }
