@@ -67,9 +67,24 @@ class Todo {
   }
 
   contentEdit(item) {
-    alert('Кликните дважды на текст задачи, затем отредактируйте его');
-    item.querySelector('span').setAttribute('contenteditable', true);
-    
+    console.log(item);
+    alert('Кликните на текст задачи, затем отредактируйте его, для сохранения нажмите Enter');
+    const todoText = item.querySelector('span');
+    todoText.setAttribute('contenteditable', true);
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Enter') {
+        console.log(todoText.textContent);
+        event.preventDefault();
+        todoText.setAttribute('contenteditable', false);
+        this.todoData.forEach(elem => {
+          if (elem.key === item.key) {
+            elem.value = todoText.textContent;
+          }
+        });
+        localStorage.toDoList = JSON.stringify([...this.todoData]);
+        this.render();
+      }
+    });
   }
 
 
