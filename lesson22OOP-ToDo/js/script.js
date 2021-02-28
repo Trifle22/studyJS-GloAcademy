@@ -54,6 +54,7 @@ class Todo {
         clickTimeCompleted: 0,
       };
       this.todoData.set(newTodo.key, newTodo);
+      this.input.value = '';
       this.render();
     } else {
       alert('Пустое поле добавить нельзя');
@@ -89,12 +90,15 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach((item, i) => {
           if (item[0] === todoItem.key) {
-            this.todoList.children[i].classList.add('todo-item-delete-animated');
+            console.log();
+            if (this.todoList.children[i]) {
+              this.todoList.children[i].classList.add('todo-item-delete-animated');
+            }
             delete items[i];
             this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
             setTimeout(() => {
               this.render();
-            }, 1980);
+            }, 510);
           }
         });
       }
@@ -118,12 +122,14 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach((item, i) => {
           if (item[0] === todoItem.key) {
-            this.todoCompleted.children[i].classList.add('todo-item-delete-animated');
+            if (this.todoCompleted.children[i]) {
+              this.todoCompleted.children[i].classList.add('todo-item-delete-animated');
+            }
             delete items[i];
             this.todoData = items.length > 1 ? new Map(items.filter(item => item)) : new Map([]);
             setTimeout(() => {
               this.render();
-            }, 1980);
+            }, 510);
           }
         });
       }

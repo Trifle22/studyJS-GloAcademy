@@ -166,11 +166,11 @@ body {
     word-break: break-word;
 }
 .todo-item-animated {
-  animation: todoAnimated 1.4s;
+  animation: todoAnimated .4s;
 }
 .todo-item-delete-animated {
   animation-name: todoDeletedAnimation;
-  animation-duration: 2000ms;
+  animation-duration: 500ms;
   animation-fill-mode: forwards;
 }
 
