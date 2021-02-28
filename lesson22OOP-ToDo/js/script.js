@@ -34,6 +34,7 @@ class Todo {
         <div class="todo-buttons">
         <button class="todo-remove"></button>
         <button class="todo-complete"></button>
+        <button class="todo-edit"></button>
         </div>`
     );
 
@@ -65,8 +66,10 @@ class Todo {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   }
 
-  animatedItem() {
-
+  contentEdit(item) {
+    alert('Кликните дважды на текст задачи, затем отредактируйте его');
+    item.querySelector('span').setAttribute('contenteditable', true);
+    
   }
 
 
@@ -90,7 +93,6 @@ class Todo {
         const todoItem = target.closest('.todo-item');
         items.forEach((item, i) => {
           if (item[0] === todoItem.key) {
-            console.log();
             if (this.todoList.children[i]) {
               this.todoList.children[i].classList.add('todo-item-delete-animated');
             }
@@ -101,6 +103,9 @@ class Todo {
             }, 510);
           }
         });
+      } else if (target.closest('.todo-edit')) {
+        const todoItem = target.closest('.todo-item');
+        this.contentEdit(todoItem);
       }
     });
     //completed listener
@@ -132,6 +137,9 @@ class Todo {
             }, 510);
           }
         });
+      } else if (target.closest('.todo-edit')) {
+        const todoItem = target.closest('.todo-item');
+        this.contentEdit(todoItem);
       }
     });
   }
