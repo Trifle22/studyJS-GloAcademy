@@ -315,12 +315,38 @@ window.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 1; i < calcItems.length; i++) {
       calcItems[i].addEventListener('input', () => {
-        const text = calcItems[i].value;
-        calcItems[i].value = text.replace(/\D/g, '');
+        calcItems[i].value = calcItems[i].value.replace(/\D/g, '');
       });
     }
   };
-
   calcValidate();
+
+  const formsTextValidate = function() {
+    const inputsName = document.querySelectorAll('input[placeholder="Ваше имя"]');
+    const inputMessage = document.querySelector('input[placeholder="Ваше сообщение"]');
+    const reg = /[а-я\s\-]$/gi;
+    inputsName.forEach(item => {
+      item.addEventListener('input', () => {
+        const value = item.value;
+        if (reg.test(value)) {
+          item.value = value;
+        } else {
+          item.value = '';
+          alert('Введите корректные данные');
+        }
+      });
+    });
+    inputMessage.addEventListener('input', () => {
+      const value = inputMessage.value;
+      if (reg.test(value)) {
+        inputMessage.value = value;
+      } else {
+        inputMessage.value = '';
+        alert('Введите корректные данные');
+      }
+    });
+  };
+
+  formsTextValidate();
 
 });
