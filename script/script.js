@@ -326,9 +326,10 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputsName = document.querySelectorAll('input[placeholder="Ваше имя"]');
     const inputMessage = document.querySelector('input[placeholder="Ваше сообщение"]');
     const inputsEmail = document.querySelectorAll('input[type="email"]');
-    console.log(inputsEmail);
+    const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
     const regText = /[а-я\s\-]$/gi;
-    const regEmail = /[a-z\!\-\_\.\~\*\'@]/gi;
+    const regEmail = /[a-z\!\-\_\.\~\*\'@]$/gi;
+    const regNum = /[0-9()\-]$/;
 
     inputsName.forEach(item => {
       item.addEventListener('input', () => {
@@ -357,6 +358,18 @@ window.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('input', () => {
         const value = item.value;
         if (regEmail.test(value)) {
+          item.value = value;
+        } else {
+          item.value = '';
+          alert('Введите корректные данные');
+        }
+      });
+    });
+
+    inputsPhone.forEach(item => {
+      item.addEventListener('input', () => {
+        const value = item.value;
+        if (regNum.test(value)) {
           item.value = value;
         } else {
           item.value = '';
