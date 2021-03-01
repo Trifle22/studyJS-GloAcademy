@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-inner-declarations */
@@ -327,19 +328,21 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputMessage = document.querySelector('input[placeholder="Ваше сообщение"]');
     const inputsEmail = document.querySelectorAll('input[type="email"]');
     const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
-    const regText = /[а-я\s\-]$/gi;
+    const regText = /^[а-яё\s\-]$/gi;
     const regEmail = /[a-z\!\-\_\.\~\*\'@]$/gi;
     const regNum = /[0-9()\-]$/;
 
     inputsName.forEach(item => {
-      item.addEventListener('input', () => {
-        const value = item.value;
-        if (regText.test(value)) {
-          item.value = value;
-        } else {
-          item.value = '';
-          alert('Введите корректные данные');
-        }
+      item.addEventListener('blur', () => {
+        const value = item.value.split('');
+        const res = '';
+        value.forEach(item => {
+          if (regText.test(item)) {
+            console.log(item);
+          } else {
+            console.log('none');
+          }
+        });
       });
     });
 
@@ -377,6 +380,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
+
+
 
   };
 
