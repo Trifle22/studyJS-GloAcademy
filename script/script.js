@@ -310,4 +310,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
   replacePhoto();
 
+  const calcValidate = function() {
+    const calcItems = document.querySelectorAll('.calc-item');
+
+    for (let i = 1; i < calcItems.length; i++) {
+      calcItems[i].addEventListener('input', () => {
+        const text = calcItems[i].value;
+        calcItems[i].value = text.replace(/\D/g, '');
+      });
+    }
+  };
+
+  calcValidate();
+
 });
