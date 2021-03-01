@@ -602,7 +602,8 @@ main a {
 
 .command__photo {
   width: 225px;
-  border-radius: 50%
+  border-radius: 50%;
+  transition: all 0.5s ease-in-out
 }
 
 .calc {

@@ -4,7 +4,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '27 february 2021';
+  const deadline = '3 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -107,7 +107,7 @@ window.addEventListener('DOMContentLoaded', () => {
         handlerMenu();
       } else if (target.closest('ul>li>a')) {
         handlerMenu();
-      } else if (!target.closest('.active-menu')) {
+      } else if (!target.closest('.active-menu') && menu.classList.contains('active-menu')) {
         handlerMenu();
       }
     });
@@ -287,15 +287,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
   slider();
 
+  const replacePhoto = function() {
+    const commandPhotosParent = document.querySelector('.command');
+    let support;
+    commandPhotosParent.addEventListener('mouseover', event => {
+      const target = event.target;
+      if (target.matches('img')) {
+        support = target.src;
+        target.src = target.dataset.img;
+        target.dataset.img = support;
+      }
+    });
+    commandPhotosParent.addEventListener('mouseout', event => {
+      const target = event.target;
+      if (target.matches('img')) {
+        support = target.src;
+        target.src = target.dataset.img;
+        target.dataset.img = support;
+      }
+    });
+  };
 
-
-
-
-
-
-
-
-
-
+  replacePhoto();
 
 });
