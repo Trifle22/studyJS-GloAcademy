@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable no-loop-func */
 /* eslint-disable no-inner-declarations */
 
@@ -324,11 +325,15 @@ window.addEventListener('DOMContentLoaded', () => {
   const formsTextValidate = function() {
     const inputsName = document.querySelectorAll('input[placeholder="Ваше имя"]');
     const inputMessage = document.querySelector('input[placeholder="Ваше сообщение"]');
-    const reg = /[а-я\s\-]$/gi;
+    const inputsEmail = document.querySelectorAll('input[type="email"]');
+    console.log(inputsEmail);
+    const regText = /[а-я\s\-]$/gi;
+    const regEmail = /[a-z\!\-\_\.\~\*\'@]/gi;
+
     inputsName.forEach(item => {
       item.addEventListener('input', () => {
         const value = item.value;
-        if (reg.test(value)) {
+        if (regText.test(value)) {
           item.value = value;
         } else {
           item.value = '';
@@ -336,16 +341,32 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+
     inputMessage.addEventListener('input', () => {
       const value = inputMessage.value;
-      if (reg.test(value)) {
+      if (regText.test(value)) {
         inputMessage.value = value;
       } else {
         inputMessage.value = '';
         alert('Введите корректные данные');
       }
     });
+
+    
+    inputsEmail.forEach(item => {
+      item.addEventListener('input', () => {
+        const value = item.value;
+        if (regEmail.test(value)) {
+          item.value = value;
+        } else {
+          item.value = '';
+          alert('Введите корректные данные');
+        }
+      });
+    });
+
   };
+
 
   formsTextValidate();
 
