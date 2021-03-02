@@ -329,7 +329,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputsEmail = document.querySelectorAll('input[type="email"]');
     const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
     const regText = /[^а-яё\s{1}\-]*/gi;
-    const regEmail = /[a-z\!\-\_\.\~\*\'@]$/gi;
+    const regEmail = /[^a-z\!\-\_\.\~\*\'@]+$/gi;
     const regNum = /[0-9()\-]$/;
 
     inputsName.forEach(item => {
@@ -339,7 +339,7 @@ window.addEventListener('DOMContentLoaded', () => {
         item.value = item.value.replace(/\-\-+/g, '-').trim();
         item.value = item.value.replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
         if (item.value[0] === '-') {
-          item.value = item.value.unshift();
+          item.value = item.value.slice(1);
         } else if (item.value[item.value.length - 1] === '-') {
           item.value = item.value.slice(0, -1);
         }
@@ -350,29 +350,29 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         }
         item.value = arr.join(' ');
+        if (item.value[0] === '-') {
+          item.value = item.value.slice(1);
+        } else if (item.value[item.value.length - 1] === '-') {
+          item.value = item.value.slice(0, -1);
+        }
       });
     });
 
-    inputMessage.addEventListener('input', () => {
-      const value = inputMessage.value;
-      if (regText.test(value)) {
-        inputMessage.value = value;
-      } else {
-        inputMessage.value = '';
-        alert('Введите корректные данные');
+    inputMessage.addEventListener('blur', () => {
+      inputMessage.value = inputMessage.value.replace(regText, '').trim();
+      inputMessage.value = inputMessage.value.replace(/\s\s+/g, ' ');
+      inputMessage.value = inputMessage.value.replace(/\-\-+/g, '-').trim();
+      inputMessage.value = inputMessage.value.replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
+      if (inputMessage.valueinputMessage[0] === '-') {
+        inputMessage.value = inputMessage.value.slice(1);
+      } else if (inputMessage.value[inputMessage.value.length - 1] === '-') {
+        inputMessage.value = inputMessage.value.slice(0, -1);
       }
     });
-
     
     inputsEmail.forEach(item => {
-      item.addEventListener('input', () => {
-        const value = item.value;
-        if (regEmail.test(value)) {
-          item.value = value;
-        } else {
-          item.value = '';
-          alert('Введите корректные данные');
-        }
+      item.addEventListener('blur', () => {
+        item.value = item.value.replace(regEmail, '');
       });
     });
 
