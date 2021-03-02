@@ -395,8 +395,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const countSum = () => {
       let total = 0,
-      countValue = 1,
-      dayValue = 1;
+        countValue = 1,
+        dayValue = 1;
       const typeValue = calcType.options[calcType.selectedIndex].value;
       const squareValue = +calcSquare.value;
 
@@ -411,11 +411,42 @@ window.addEventListener('DOMContentLoaded', () => {
       }
 
       if (typeValue && squareValue) {
-        total = price * typeValue * squareValue * countValue * dayValue;
-      } else {
-        total = 0;
+        total = Math.ceil(price * typeValue * squareValue * countValue * dayValue);
       }
-      totalValue.textContent = total;
+      console.log(total);
+
+      if (total > 0) {
+        const animateValue = function(elem, value, inc, shift, speed) {
+          let interval = false;
+          if (inc) {
+            interval = setInterval(() => {
+              if (+elem.textContent * 1 + shift >= value) {
+                elem.textContent = value;
+                clearInterval(interval);
+              } else {
+                elem.textContent = +elem.textContent * 1 + shift;
+              }
+            }, speed);
+          } else {
+            console.log('ivuyub');
+            interval = setInterval(() => {
+              if (+elem.textContent * 1 - shift <= value) {
+                elem.textContent = value;
+                clearInterval(interval);
+              } else {
+                elem.textContent = +elem.textContent * 1 - shift;
+              }
+            }, speed);
+          }
+        };
+
+        if (totalValue > total) {
+          animateValue(totalValue, total, false, 10, 1);
+        } else {
+          animateValue(totalValue, total, true, 10, 1);
+        }
+      }
+
     };
 
     calcBlock.addEventListener('change', event => {
