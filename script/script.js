@@ -328,21 +328,28 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputMessage = document.querySelector('input[placeholder="Ваше сообщение"]');
     const inputsEmail = document.querySelectorAll('input[type="email"]');
     const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
-    const regText = /^[а-яё\s\-]$/gi;
+    const regText = /[^а-яё\s{1}\-]*/gi;
     const regEmail = /[a-z\!\-\_\.\~\*\'@]$/gi;
     const regNum = /[0-9()\-]$/;
 
     inputsName.forEach(item => {
       item.addEventListener('blur', () => {
-        const value = item.value.split('');
-        const res = '';
-        value.forEach(item => {
-          if (regText.test(item)) {
-            console.log(item);
-          } else {
-            console.log('none');
+        item.value = item.value.replace(regText, '');
+        item.value = item.value.replace(/\s\s+/g, ' ');
+        item.value = item.value.replace(/\-\-+/g, '-').trim();
+        item.value = item.value.replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
+        if (item.value[0] === '-') {
+          item.value = item.value.unshift();
+        } else if (item.value[item.value.length - 1] === '-') {
+          item.value = item.value.slice(0, -1);
+        }
+        const arr = item.value.split(' ');
+        for (let i = 0; i < arr.length; i++) {
+          if (arr[i]) {
+            arr[i] = arr[i][0].toUpperCase() + arr[i].substr(1);
           }
-        });
+        }
+        item.value = arr.join(' ');
       });
     });
 
