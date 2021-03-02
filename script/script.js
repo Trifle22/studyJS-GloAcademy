@@ -330,7 +330,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
     const regText = /[^а-яё\s{1}\-]*/gi;
     const regEmail = /[^a-z\!\-\_\.\~\*\'@]+$/gi;
-    const regNum = /[0-9()\-]$/;
 
     inputsName.forEach(item => {
       item.addEventListener('blur', () => {
@@ -346,15 +345,13 @@ window.addEventListener('DOMContentLoaded', () => {
         const arr = item.value.split(' ');
         for (let i = 0; i < arr.length; i++) {
           if (arr[i]) {
-            arr[i] = arr[i][0].toUpperCase() + arr[i].substr(1);
+            arr[i] = arr[i][0].toUpperCase() + arr[i].substr(1).toLowerCase();
           }
         }
         item.value = arr.join(' ');
-        if (item.value[0] === '-') {
-          item.value = item.value.slice(1);
-        } else if (item.value[item.value.length - 1] === '-') {
-          item.value = item.value.slice(0, -1);
-        }
+        console.log(item.value);
+        item.value = item.value.replace(/^[\-]*$/g, '');
+        console.log(item.value);
       });
     });
 
@@ -362,29 +359,23 @@ window.addEventListener('DOMContentLoaded', () => {
       inputMessage.value = inputMessage.value.replace(regText, '').trim();
       inputMessage.value = inputMessage.value.replace(/\s\s+/g, ' ');
       inputMessage.value = inputMessage.value.replace(/\-\-+/g, '-').trim();
-      inputMessage.value = inputMessage.value.replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
-      if (inputMessage.valueinputMessage[0] === '-') {
-        inputMessage.value = inputMessage.value.slice(1);
-      } else if (inputMessage.value[inputMessage.value.length - 1] === '-') {
-        inputMessage.value = inputMessage.value.slice(0, -1);
-      }
+      inputMessage.value = inputMessage.value.replace(/[^а-яё\-\,\ \.]*/ig, '').trim();
     });
     
     inputsEmail.forEach(item => {
       item.addEventListener('blur', () => {
         item.value = item.value.replace(regEmail, '');
+        item.value = item.value.replace(/\s\s+/g, ' ');
+        item.value = item.value.replace(/\-\-+/g, '-').trim();
       });
     });
 
     inputsPhone.forEach(item => {
-      item.addEventListener('input', () => {
-        const value = item.value;
-        if (regNum.test(value)) {
-          item.value = value;
-        } else {
-          item.value = '';
-          alert('Введите корректные данные');
-        }
+      item.addEventListener('blur', () => {
+        item.value = item.value.replace(/^[^0-9()\-]*$/g, '');
+        item.value = item.value.replace(/\s\s+/g, ' ');
+        item.value = item.value.replace(/\-\-+/g, '-').trim();
+        item.value = item.value.replace(/^[\-]+$/g, '');
       });
     });
 
