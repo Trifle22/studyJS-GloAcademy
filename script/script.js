@@ -6,7 +6,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '3 march 2021';
+  const deadline = '4 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -69,13 +69,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function loopAnimation() {
     runAnimation();
-    setTimeout(() => {
+    setInterval(() => {
       timerSeconds.style.animation = 'animationTimer 1s';
-      requestAnimationFrame(loopAnimation);
     }, 1000);
   }
 
-  loopAnimation();
+  requestAnimationFrame(loopAnimation);
+
 
   function scrollToAnchors() {
     const anchors = document.querySelectorAll('a[href*="#"]');
@@ -331,17 +331,15 @@ window.addEventListener('DOMContentLoaded', () => {
     const regText = /[^а-яё\s{1}\-]*/gi;
     const regEmail = /[^a-z\!\-\_\.\~\*\'@]+$/gi;
 
+    
+
     inputsName.forEach(item => {
       item.addEventListener('blur', () => {
-        item.value = item.value.replace(regText, '');
-        item.value = item.value.replace(/\s\s+/g, ' ');
-        item.value = item.value.replace(/\-\-+/g, '-').trim();
-        item.value = item.value.replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
-        if (item.value[0] === '-') {
-          item.value = item.value.slice(1);
-        } else if (item.value[item.value.length - 1] === '-') {
-          item.value = item.value.slice(0, -1);
-        }
+        item.value = 
+        item.value.replace(regText, '')
+          .replace(/\s\s+/g, ' ')
+          .replace(/\-\-+/g, '-')
+          .replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
         const arr = item.value.split(' ');
         for (let i = 0; i < arr.length; i++) {
           if (arr[i]) {
@@ -349,33 +347,41 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         }
         item.value = arr.join(' ');
-        console.log(item.value);
-        item.value = item.value.replace(/^[\-]*$/g, '');
-        console.log(item.value);
+        item.value = item.value.replace(/^-+/g, '').replace(/-+$/g, '');
       });
     });
 
     inputMessage.addEventListener('blur', () => {
-      inputMessage.value = inputMessage.value.replace(/[^а-яё\s{1}\-\,\.]*/gi, '').trim();
-      inputMessage.value = inputMessage.value.replace(/\s\s+/g, ' ');
-      inputMessage.value = inputMessage.value.replace(/\-\-+/g, '-').trim();
-      inputMessage.value = inputMessage.value.replace(/[^а-яё\-\,\ \.]*/ig, '').trim();
+      inputMessage.value = inputMessage.value
+        .replace(/[^а-яё\s{1}\-\,\.]*/gi, '')
+        .replace(/\s\s+/g, ' ')
+        .replace(/\-\-+/g, '-')
+        .replace(/[^а-яё\-\,\ \.]*/ig, '')
+        .replace(/^-+|-+$/ig, '').trim();
     });
     
     inputsEmail.forEach(item => {
       item.addEventListener('blur', () => {
-        item.value = item.value.replace(regEmail, '');
-        item.value = item.value.replace(/\s\s+/g, ' ');
-        item.value = item.value.replace(/\-\-+/g, '-').trim();
+        item.value = item.value
+          .replace(regEmail, '')
+          .replace(/\s\s+/g, ' ')
+          .replace(/\-\-+/g, '-')
+          .replace(/^-+|-+$/ig, '')
+          .trim();
       });
     });
 
     inputsPhone.forEach(item => {
-      item.addEventListener('blur', () => {
-        item.value = item.value.replace(/^[^0-9()\-]*$/g, '');
-        item.value = item.value.replace(/\s\s+/g, ' ');
-        item.value = item.value.replace(/\-\-+/g, '-').trim();
-        item.value = item.value.replace(/^[\-]+$/g, '');
+      item.addEventListener('blur', e => {
+        let target = e.target;
+        let value = target.value;
+        value = value.replace(/[^\d()\-]/ig, '');
+        // item.value = item.value
+        //   .replace(/^[^0-9()\-]*$/g, '')
+        //   .replace(/\s+/g, ' ')
+        //   .replace(/\-\-+/g, '-')
+        //   .replace(/^-+|-+$/, '')
+        //   .replace(/^[\-]+$/g, '').trim();
       });
     });
 
@@ -428,7 +434,6 @@ window.addEventListener('DOMContentLoaded', () => {
               }
             }, speed);
           } else {
-            console.log('ivuyub');
             interval = setInterval(() => {
               if (+elem.textContent * 1 - shift <= value) {
                 elem.textContent = value;
@@ -440,7 +445,7 @@ window.addEventListener('DOMContentLoaded', () => {
           }
         };
 
-        if (totalValue > total) {
+        if (totalValue.textContent > total) {
           animateValue(totalValue, total, false, 10, 1);
         } else {
           animateValue(totalValue, total, true, 10, 1);
