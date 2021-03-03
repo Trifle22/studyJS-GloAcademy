@@ -329,59 +329,58 @@ window.addEventListener('DOMContentLoaded', () => {
     const inputsEmail = document.querySelectorAll('input[type="email"]');
     const inputsPhone = document.querySelectorAll('input[placeholder="Номер телефона"]');
     const regText = /[^а-яё\s{1}\-]*/gi;
-    const regEmail = /[^a-z\!\-\_\.\~\*\'@]+$/gi;
 
-    
+    const customValidator = val => {
+      val = val.replace(/\s+/g, ' ');
+      val = val.replace(/-+/g, '-');
+      val = val.replace(/^[ |\-+]/g, '');
+      val = val.replace(/[ |\-+]$/g, '');
+
+      return val;
+    };
 
     inputsName.forEach(item => {
-      item.addEventListener('blur', () => {
-        item.value = 
-        item.value.replace(regText, '')
-          .replace(/\s\s+/g, ' ')
-          .replace(/\-\-+/g, '-')
-          .replace(/^[^а-яё\-]+\s[^а-яё\-]+$/gi, '').trim();
-        const arr = item.value.split(' ');
+      item.addEventListener('blur', e => {
+        const target = e.target;
+        let val = target.value;
+        val = val.replace(/[^а-яА-ЯёЁ\s\-]/g, '');
+        val = customValidator(val);
+        const arr = val.split(' ');
         for (let i = 0; i < arr.length; i++) {
           if (arr[i]) {
             arr[i] = arr[i][0].toUpperCase() + arr[i].substr(1).toLowerCase();
           }
         }
-        item.value = arr.join(' ');
-        item.value = item.value.replace(/^-+/g, '').replace(/-+$/g, '');
+        val = arr.join(' ');
+        item.value = customValidator(val);
       });
     });
 
-    inputMessage.addEventListener('blur', () => {
-      inputMessage.value = inputMessage.value
-        .replace(/[^а-яё\s{1}\-\,\.]*/gi, '')
-        .replace(/\s\s+/g, ' ')
-        .replace(/\-\-+/g, '-')
-        .replace(/[^а-яё\-\,\ \.]*/ig, '')
-        .replace(/^-+|-+$/ig, '').trim();
+    inputMessage.addEventListener('blur', e => {
+      const target = e.target;
+      let val = target.value;
+      val = val.replace(/[^а-яА-ЯёЁ\s\-.,]/g, '');
+      val = customValidator(val);
+      target.value = val;
     });
     
     inputsEmail.forEach(item => {
-      item.addEventListener('blur', () => {
-        item.value = item.value
-          .replace(regEmail, '')
-          .replace(/\s\s+/g, ' ')
-          .replace(/\-\-+/g, '-')
-          .replace(/^-+|-+$/ig, '')
-          .trim();
+      item.addEventListener('blur', e => {
+        const target = e.target;
+        let val = target.value;
+        val = val.replace(/[^_@.!~*'A_Za-z\-]/g, '');
+        val = customValidator(val);
+        target.value = val;
       });
     });
 
     inputsPhone.forEach(item => {
       item.addEventListener('blur', e => {
-        let target = e.target;
-        let value = target.value;
-        value = value.replace(/[^\d()\-]/ig, '');
-        // item.value = item.value
-        //   .replace(/^[^0-9()\-]*$/g, '')
-        //   .replace(/\s+/g, ' ')
-        //   .replace(/\-\-+/g, '-')
-        //   .replace(/^-+|-+$/, '')
-        //   .replace(/^[\-]+$/g, '').trim();
+        const target = e.target;
+        let val = target.value;
+        val = val.replace(/[^\d()\-]/ig, '');
+        val = customValidator(val);
+        target.value = val;
       });
     });
 
@@ -415,13 +414,16 @@ window.addEventListener('DOMContentLoaded', () => {
       } else if (calcDay.value && calcDay.value < 10) {
         dayValue *= 1.5;
       }
-
       if (typeValue && squareValue) {
         total = Math.ceil(price * typeValue * squareValue * countValue * dayValue);
+      } else if (!typeValue) {
+        total = 0;
+        calcSquare.value = '';
+        calcDay.value = '';
+        calcCount.value = '';
       }
-      console.log(total);
 
-      if (total > 0) {
+      if (total >= 0) {
         const animateValue = function(elem, value, inc, shift, speed) {
           let interval = false;
           if (inc) {
@@ -446,9 +448,9 @@ window.addEventListener('DOMContentLoaded', () => {
         };
 
         if (totalValue.textContent > total) {
-          animateValue(totalValue, total, false, 10, 1);
+          animateValue(totalValue, total, false, 50, 1);
         } else {
-          animateValue(totalValue, total, true, 10, 1);
+          animateValue(totalValue, total, true, 50, 1);
         }
       }
 
