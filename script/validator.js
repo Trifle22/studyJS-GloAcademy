@@ -32,10 +32,11 @@ class Validator {
         return true;
       },
       pattern(elem, pattern) {
-        console.log(pattern)
+        console.log(pattern);
         return pattern.test(elem.value);
       }
     };
+
 
     if (this.method) {
       const method = this.method[elem.id];
@@ -43,7 +44,7 @@ class Validator {
         return method.every(item => validatorMethod[item[0]](elem, this.pattern[item[1]]));
       }
     } else {
-      console.warn('Необходимо передать айди полей ввода и методы проверки этих полей!');
+      console.warn('Необходимо передать id полей ввода и методы проверки этих полей!');
     }
 
     return true;
@@ -59,8 +60,6 @@ class Validator {
       this.error.add(target);
     }
   }
-
-
 
   showError(elem) {
     elem.classList.remove('success');
@@ -86,10 +85,10 @@ class Validator {
     const style = document.createElement('style');
     style.textContent = `
     input.success {
-      border: 2px solid green
+      border: 1px solid green
     }
     input.error {
-      border: 2px solid red
+      border: 1px solid red
     }
     .validator-error {
       font-size: 12px;
@@ -99,6 +98,7 @@ class Validator {
     `;
     document.head.appendChild(style);
   }
+
   setPattern() {
     if (!this.pattern.phone) {
       this.pattern.phone = /^\+?[78]([-()]*\d){10}$/;
@@ -106,5 +106,31 @@ class Validator {
     if (!this.pattern.email) {
       this.pattern.email = /^\w+@\w+\.\w{2,}$/;
     }
+    if (!this.pattern.nameOrMessage) {
+      this.pattern.nameOrMessage = /^[а-яА-ЯёЁ,.\s]+$/g;
+    }
   }
 }
+
+const validForm1 = new Validator({
+  selector: '#form1',
+  pattern: {
+    
+  },
+  method: {
+    'form1-name': [
+      ['notEmpty'],
+      ['pattern', 'form1-name']
+    ],
+    'form1-phone': [
+      ['notEmpty'],
+      ['pattern', 'form1-phone']
+    ],
+    'form1-email': [
+      ['notEmpty'],
+      ['pattern', 'form1-email']
+    ]
+  }
+});
+
+validForm1.init();

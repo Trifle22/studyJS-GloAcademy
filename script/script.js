@@ -387,7 +387,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
 
-  formsTextValidate();
+  // formsTextValidate();
 
   //calculator
   const calculator = (price = 100) => {
