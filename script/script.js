@@ -379,8 +379,9 @@ window.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('blur', e => {
         const target = e.target;
         let val = target.value;
-        val = val.replace(/\+[^\d()\-]/g, '');
+        val = val.replace(/^\+[^\d()\-]/g, '');
         val = customValidator(val);
+        val = '+' + val;
         target.value = val;
       });
     });
