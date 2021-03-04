@@ -6,7 +6,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '4 march 2021';
+  const deadline = '5 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -359,7 +359,7 @@ window.addEventListener('DOMContentLoaded', () => {
     inputMessage.addEventListener('blur', e => {
       const target = e.target;
       let val = target.value;
-      val = val.replace(/[^а-яА-ЯёЁ\s\-.,]/g, '');
+      val = val.replace(/[^а-яА-ЯёЁ0-9\s\-.,]+/g, '');
       val = customValidator(val);
       target.value = val;
     });
@@ -368,17 +368,19 @@ window.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('blur', e => {
         const target = e.target;
         let val = target.value;
-        val = val.replace(/[^_@.!~*'A_Za-z\-]/g, '');
+        val = val.replace(/[^_@.!~*'A_Za-z\-\d]/g, '');
         val = customValidator(val);
         target.value = val;
       });
     });
 
     inputsPhone.forEach(item => {
+      console.log(item.id);
+      maskPhone(`#${item.id}`);
       item.addEventListener('blur', e => {
         const target = e.target;
         let val = target.value;
-        val = val.replace(/[^\d()\-]/ig, '');
+        val = val.replace(/+[^\d()\-]/ig, '');
         val = customValidator(val);
         target.value = val;
       });
@@ -387,7 +389,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
 
-  // formsTextValidate();
+  formsTextValidate();
 
   //calculator
   const calculator = (price = 100) => {
@@ -465,4 +467,5 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   calculator(100);
+
 });
