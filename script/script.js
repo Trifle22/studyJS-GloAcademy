@@ -470,29 +470,66 @@ window.addEventListener('DOMContentLoaded', () => {
   //send-ajax-form
 
   const sendForm = () => {
-    const errorMessage = 'Что-то пошло не так...';
-    const loadMessage = 'Загрузка...';
-    const successMessage = 'Спасибо! Мы скоро с вами свяжемся!';
-    const form1 = document.getElementById('form1');
 
-    const statusMessage = document.createElement('div');
-    statusMessage.style.cssText = 'font-size: 2rem';
+    const form1 = document.getElementById('form1');
+    const form2 = document.getElementById('form2');
+    const form3 = document.getElementById('form3');
+
 
     form1.addEventListener('submit', (event) => {
       event.preventDefault();
-      form1.appendChild(statusMessage);
-      statusMessage.textContent = loadMessage;
+      const formElements = [...form1.elements].filter(item => item.tagName.toLowerCase() !== 'button');
       const formData = new FormData(form1);
       let body = {};
       formData.forEach((value, key) => {
         body[key] = value;
       });
-      postData(body, () => {
-        statusMessage.textContent = successMessage;
-      }, (error) => {
-        statusMessage.textContent = errorMessage;
-        console.error(error);
+      postData(body, 
+        () => {
+          formElements.forEach(item => {
+            item.value = '';
+          })
+        }, 
+        (error) => {
+          console.error(error);
+        });
+    });
+    form2.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formElements = [...form2.elements].filter(item => item.tagName.toLowerCase() !== 'button');
+      const formData = new FormData(form2);
+      let body = {};
+      formData.forEach((value, key) => {
+        body[key] = value;
       });
+      postData(body, 
+        () => {
+          formElements.forEach(item => {
+            item.value = '';
+          })
+        }, 
+        (error) => {
+          console.error(error);
+        });
+    });
+
+    form3.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formElements = [...form3.elements].filter(item => item.tagName.toLowerCase() !== 'button');
+      const formData = new FormData(form3);
+      let body = {};
+      formData.forEach((value, key) => {
+        body[key] = value;
+      });
+      postData(body, 
+        () => {
+          formElements.forEach(item => {
+            item.value = '';
+          })
+        }, 
+        (error) => {
+          console.error(error);
+        });
     });
 
     const postData = (body, outputData, errorData) => {
@@ -509,7 +546,6 @@ window.addEventListener('DOMContentLoaded', () => {
       });
       request.open('POST', './server.php');
       request.setRequestHeader('Content-Type', 'application/json');
-
       request.send(JSON.stringify(body));
     }
   }
