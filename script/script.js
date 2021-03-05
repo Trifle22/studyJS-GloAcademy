@@ -6,7 +6,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '5 march 2021';
+  const deadline = '8 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -475,6 +475,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const form1 = document.getElementById('form1');
     const form2 = document.getElementById('form2');
     const form3 = document.getElementById('form3');
+    const preLoader = document.querySelector('.loader-container');
+    const svgLoaderContainer = document.querySelector('.svg-loader-container');
+    const checkMarkClassName = 'animate';
+    const checkMarkLoader = document.querySelector('.check-mark-loader');
+
 
 
     form1.addEventListener('submit', (event) => {
@@ -490,9 +495,17 @@ window.addEventListener('DOMContentLoaded', () => {
           formElements.forEach(item => {
             item.value = '';
           })
+          preLoader.style.display = 'none';
+          svgLoaderContainer.style.display = 'block';
+          checkMarkLoader.classList.add(checkMarkClassName);
+          setTimeout(function(){      
+            checkMarkLoader.classList.remove(checkMarkClassName);
+            svgLoaderContainer.style.display = 'none';
+          }, 1700);
         }, 
         (error) => {
           console.error(error);
+          preLoader.style.display = 'none';
         });
     });
     form2.addEventListener('submit', (event) => {
@@ -508,9 +521,17 @@ window.addEventListener('DOMContentLoaded', () => {
           formElements.forEach(item => {
             item.value = '';
           })
+          preLoader.style.display = 'none';
+          svgLoaderContainer.style.display = 'block';
+          checkMarkLoader.classList.add(checkMarkClassName);
+          setTimeout(function(){      
+            checkMarkLoader.classList.remove(checkMarkClassName);
+            svgLoaderContainer.style.display = 'none';
+          }, 1700); 
         }, 
         (error) => {
           console.error(error);
+          preLoader.style.display = 'none';
         });
     });
 
@@ -526,9 +547,17 @@ window.addEventListener('DOMContentLoaded', () => {
         () => {
           formElements.forEach(item => {
             item.value = '';
-          })
+          });
+          preLoader.style.display = 'none';
+          svgLoaderContainer.style.display = 'block';
+          checkMarkLoader.classList.add(checkMarkClassName);
+          setTimeout(function(){      
+            checkMarkLoader.classList.remove(checkMarkClassName);
+            svgLoaderContainer.style.display = 'none';
+          }, 1700); 
         }, 
         (error) => {
+          preLoader.style.display = 'none';
           console.error(error);
         });
     });
@@ -536,6 +565,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const postData = (body, outputData, errorData) => {
       const request = new XMLHttpRequest();
       request.addEventListener('readystatechange', () => {
+        preLoader.style.display = 'block';
         if (request.readyState !== 4 ) {
           return;
         }
@@ -554,3 +584,4 @@ window.addEventListener('DOMContentLoaded', () => {
   sendForm();
 
 });
+
