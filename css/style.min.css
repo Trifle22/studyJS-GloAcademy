@@ -1284,6 +1284,50 @@ svg.animate path {
   opacity:1;
 }
 
+@keyframes errorAlertActive {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+.error-alert {
+  padding: 20px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: red;
+  display: none;
+  justify-content: space-between;
+  color: white;
+  font-family: sans-serif;
+  font-size: 14px;
+  align-items: center;
+  z-index: 999;
+}
+.error-alert.error-alert-active {
+  display: flex !important;
+  animation: errorAlertActive 0.5s ease-in-out;
+}
+
+.error-alert-close {
+  color: white;
+  background-color:  transparent;
+  border: none;
+  outline: none;
+  transition:  all 0.5s ease-in-out;
+  font-size: 16px;
+}
+
+.error-alert-close:hover {
+  transform: rotate(360deg);
+  background-color: transparent;
+}
+
 @keyframes draw {
   0% {
     opacity: 1;

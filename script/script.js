@@ -479,6 +479,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const svgLoaderContainer = document.querySelector('.svg-loader-container');
     const checkMarkClassName = 'animate';
     const checkMarkLoader = document.querySelector('.check-mark-loader');
+    const errorAlert = document.querySelector('.error-alert');
+    const errorAlertClose = document.querySelector('.error-alert-close');
 
 
 
@@ -498,7 +500,7 @@ window.addEventListener('DOMContentLoaded', () => {
           preLoader.style.display = 'none';
           svgLoaderContainer.style.display = 'block';
           checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){      
+          setTimeout(function(){
             checkMarkLoader.classList.remove(checkMarkClassName);
             svgLoaderContainer.style.display = 'none';
           }, 1700);
@@ -506,6 +508,11 @@ window.addEventListener('DOMContentLoaded', () => {
         (error) => {
           console.error(error);
           preLoader.style.display = 'none';
+          console.log(error);
+          errorAlert.classList.add('error-alert-active');
+          errorAlertClose.addEventListener('click', () => {
+            errorAlert.classList.remove('error-alert-active');
+          })
         });
     });
     form2.addEventListener('submit', (event) => {
@@ -532,6 +539,11 @@ window.addEventListener('DOMContentLoaded', () => {
         (error) => {
           console.error(error);
           preLoader.style.display = 'none';
+          console.log(error);
+          errorAlert.classList.add('error-alert-active');
+          errorAlertClose.addEventListener('click', () => {
+            errorAlert.classList.remove('error-alert-active');
+          })
         });
     });
 
@@ -559,6 +571,10 @@ window.addEventListener('DOMContentLoaded', () => {
         (error) => {
           preLoader.style.display = 'none';
           console.error(error);
+          errorAlert.classList.add('error-alert-active');
+          errorAlertClose.addEventListener('click', () => {
+            errorAlert.classList.remove('error-alert-active');
+          })
         });
     });
 
