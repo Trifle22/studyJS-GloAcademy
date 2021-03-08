@@ -6,7 +6,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '8 march 2021';
+  const deadline = '10 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -370,7 +370,12 @@ window.addEventListener('DOMContentLoaded', () => {
         let val = target.value;
         val = val.replace(/[^_@.!~*'A_Za-z\-\d]/g, '');
         val = customValidator(val);
-        target.value = val;
+        if (val.includes('@')) {
+          target.value = val;
+        } else {
+          alert('Введите корректный адрес электронной почты');
+          target.value = '';
+        }
       });
     });
 
@@ -382,7 +387,12 @@ window.addEventListener('DOMContentLoaded', () => {
         val = val.replace(/^\+[^\d()\-]/g, '');
         val = customValidator(val);
         val = '+' + val;
-        target.value = val;
+        if (val.length === 18) {
+          target.value = val;
+        } else {
+          alert('Введите корректный номер телефона длиной 11 символов');
+          target.value = '';
+        }
       });
     });
 
@@ -566,12 +576,14 @@ window.addEventListener('DOMContentLoaded', () => {
           setTimeout(function(){      
             checkMarkLoader.classList.remove(checkMarkClassName);
             svgLoaderContainer.style.display = 'none';
+            document.querySelector('.popup').style.display = 'none';
           }, 1700); 
         }, 
         (error) => {
           preLoader.style.display = 'none';
           console.error(error);
           errorAlert.classList.add('error-alert-active');
+          document.querySelector('.popup').style.display = 'none';
           errorAlertClose.addEventListener('click', () => {
             errorAlert.classList.remove('error-alert-active');
           })

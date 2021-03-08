@@ -1262,7 +1262,7 @@ footer .web {
   width: 120px;
   height: 300px;
   position: fixed;
-  top: 90%;
+  top: 50%;
   left: 50%;
   transform: translateX(-60px) translateY(-150px);
   z-index: 999;
