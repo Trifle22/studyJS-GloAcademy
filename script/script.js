@@ -370,7 +370,7 @@ window.addEventListener('DOMContentLoaded', () => {
         let val = target.value;
         val = val.replace(/[^_@.!~*'A_Za-z\-\d]/g, '');
         val = customValidator(val);
-        if (val.includes('@')) {
+        if (val.includes('@') && val.trim() !== '') {
           target.value = val;
         } else {
           alert('Введите корректный адрес электронной почты');
@@ -502,29 +502,37 @@ window.addEventListener('DOMContentLoaded', () => {
       formData.forEach((value, key) => {
         body[key] = value;
       });
-      postData(body, 
-        () => {
-          formElements.forEach(item => {
-            item.value = '';
-          })
-          preLoader.style.display = 'none';
-          svgLoaderContainer.style.display = 'block';
-          checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){
-            checkMarkLoader.classList.remove(checkMarkClassName);
-            svgLoaderContainer.style.display = 'none';
-          }, 1700);
-        }, 
-        (error) => {
-          console.error(error);
-          preLoader.style.display = 'none';
-          console.log(error);
-          errorAlert.classList.add('error-alert-active');
-          errorAlertClose.addEventListener('click', () => {
-            errorAlert.classList.remove('error-alert-active');
-          })
-        });
+      if (formElements[0].value !== '' &&
+      formElements[1].value !== '' &&
+      formElements[2].value !== '') {
+        postData(body, 
+          () => {
+            formElements.forEach(item => {
+              item.value = '';
+            })
+            preLoader.style.display = 'none';
+            svgLoaderContainer.style.display = 'block';
+            checkMarkLoader.classList.add(checkMarkClassName);
+            setTimeout(function(){
+              checkMarkLoader.classList.remove(checkMarkClassName);
+              svgLoaderContainer.style.display = 'none';
+            }, 1700);
+          }, 
+          (error) => {
+            console.error(error);
+            preLoader.style.display = 'none';
+            console.log(error);
+            errorAlert.classList.add('error-alert-active');
+            errorAlertClose.addEventListener('click', () => {
+              errorAlert.classList.remove('error-alert-active');
+            })
+          });
+      } else {
+        event.preventDefault();
+        alert('Введите корректные данные во все поля формы');
+      }
     });
+
     form2.addEventListener('submit', (event) => {
       event.preventDefault();
       const formElements = [...form2.elements].filter(item => item.tagName.toLowerCase() !== 'button');
@@ -533,28 +541,36 @@ window.addEventListener('DOMContentLoaded', () => {
       formData.forEach((value, key) => {
         body[key] = value;
       });
-      postData(body, 
-        () => {
-          formElements.forEach(item => {
-            item.value = '';
-          })
-          preLoader.style.display = 'none';
-          svgLoaderContainer.style.display = 'block';
-          checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){      
-            checkMarkLoader.classList.remove(checkMarkClassName);
-            svgLoaderContainer.style.display = 'none';
-          }, 1700); 
-        }, 
-        (error) => {
-          console.error(error);
-          preLoader.style.display = 'none';
-          console.log(error);
-          errorAlert.classList.add('error-alert-active');
-          errorAlertClose.addEventListener('click', () => {
-            errorAlert.classList.remove('error-alert-active');
-          })
-        });
+      if (formElements[0].value !== '' &&
+      formElements[1].value !== '' &&
+      formElements[2].value !== '' &&
+      formElements[3].value !== '') {
+        postData(body, 
+          () => {
+            formElements.forEach(item => {
+              item.value = '';
+            })
+            preLoader.style.display = 'none';
+            svgLoaderContainer.style.display = 'block';
+            checkMarkLoader.classList.add(checkMarkClassName);
+            setTimeout(function(){      
+              checkMarkLoader.classList.remove(checkMarkClassName);
+              svgLoaderContainer.style.display = 'none';
+            }, 1700); 
+          }, 
+          (error) => {
+            console.error(error);
+            preLoader.style.display = 'none';
+            console.log(error);
+            errorAlert.classList.add('error-alert-active');
+            errorAlertClose.addEventListener('click', () => {
+              errorAlert.classList.remove('error-alert-active');
+            })
+          });
+      } else {
+        event.preventDefault();
+        alert('Введите корректные данные во все поля формы');
+      }
     });
 
     form3.addEventListener('submit', (event) => {
@@ -565,29 +581,36 @@ window.addEventListener('DOMContentLoaded', () => {
       formData.forEach((value, key) => {
         body[key] = value;
       });
-      postData(body, 
-        () => {
-          formElements.forEach(item => {
-            item.value = '';
-          });
-          preLoader.style.display = 'none';
-          svgLoaderContainer.style.display = 'block';
-          checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){      
-            checkMarkLoader.classList.remove(checkMarkClassName);
-            svgLoaderContainer.style.display = 'none';
+      if (formElements[0].value !== '' &&
+      formElements[1].value !== '' &&
+      formElements[2].value !== '') {
+        postData(body, 
+          () => {
+            formElements.forEach(item => {
+              item.value = '';
+            });
+            preLoader.style.display = 'none';
+            svgLoaderContainer.style.display = 'block';
+            checkMarkLoader.classList.add(checkMarkClassName);
+            setTimeout(function(){      
+              checkMarkLoader.classList.remove(checkMarkClassName);
+              svgLoaderContainer.style.display = 'none';
+              document.querySelector('.popup').style.display = 'none';
+            }, 1700); 
+          }, 
+          (error) => {
+            preLoader.style.display = 'none';
+            console.error(error);
+            errorAlert.classList.add('error-alert-active');
             document.querySelector('.popup').style.display = 'none';
-          }, 1700); 
-        }, 
-        (error) => {
-          preLoader.style.display = 'none';
-          console.error(error);
-          errorAlert.classList.add('error-alert-active');
-          document.querySelector('.popup').style.display = 'none';
-          errorAlertClose.addEventListener('click', () => {
-            errorAlert.classList.remove('error-alert-active');
-          })
-        });
+            errorAlertClose.addEventListener('click', () => {
+              errorAlert.classList.remove('error-alert-active');
+            })
+          });
+      } else {
+        event.preventDefault();
+        alert('Введите корректные данные во все поля формы');
+      }
     });
 
     const postData = (body, outputData, errorData) => {
