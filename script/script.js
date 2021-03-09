@@ -6,7 +6,7 @@
 
 /* eslint-disable no-trailing-spaces */
 window.addEventListener('DOMContentLoaded', () => {
-  const deadline = '10 march 2021';
+  const deadline = '12 march 2021';
   
   const timerHours = document.querySelector('#timer-hours');
   const timerMinutes = document.querySelector('#timer-minutes');
@@ -493,6 +493,23 @@ window.addEventListener('DOMContentLoaded', () => {
     const errorAlertClose = document.querySelector('.error-alert-close');
 
 
+    const successfulExecution = () => {
+      preLoader.style.display = 'none';
+      svgLoaderContainer.style.display = 'block';
+      checkMarkLoader.classList.add(checkMarkClassName);
+      setTimeout(function(){      
+        checkMarkLoader.classList.remove(checkMarkClassName);
+        svgLoaderContainer.style.display = 'none';
+      }, 1700); 
+    }
+    const badExecution = (error) => {
+      console.error(error);
+      preLoader.style.display = 'none';
+      errorAlert.classList.add('error-alert-active');
+      errorAlertClose.addEventListener('click', () => {
+        errorAlert.classList.remove('error-alert-active');
+      })
+    }
 
     form1.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -506,27 +523,17 @@ window.addEventListener('DOMContentLoaded', () => {
       formElements[1].value !== '' &&
       formElements[2].value !== '') {
         postData(body)
-        .then((status) => {
-          console.log(status);
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200')
+          }
           formElements.forEach(item => {
             item.value = '';
           })
-          preLoader.style.display = 'none';
-          svgLoaderContainer.style.display = 'block';
-          checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){
-            checkMarkLoader.classList.remove(checkMarkClassName);
-            svgLoaderContainer.style.display = 'none';
-          }, 1700);
+          successfulExecution();
         })
         .catch(error => {
-          console.error(error);
-          preLoader.style.display = 'none';
-          console.log(error);
-          errorAlert.classList.add('error-alert-active');
-          errorAlertClose.addEventListener('click', () => {
-            errorAlert.classList.remove('error-alert-active');
-          })
+          badExecution(error);
         });
       } else {
         event.preventDefault();
@@ -547,26 +554,17 @@ window.addEventListener('DOMContentLoaded', () => {
       formElements[2].value !== '' &&
       formElements[3].value !== '') {
         postData(body)
-        .then(() => {
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('status network not 200')
+          }
           formElements.forEach(item => {
             item.value = '';
           })
-          preLoader.style.display = 'none';
-          svgLoaderContainer.style.display = 'block';
-          checkMarkLoader.classList.add(checkMarkClassName);
-          setTimeout(function(){      
-            checkMarkLoader.classList.remove(checkMarkClassName);
-            svgLoaderContainer.style.display = 'none';
-          }, 1700); 
+          successfulExecution();
         })
         .catch(error => {
-          console.error(error);
-          preLoader.style.display = 'none';
-          console.log(error);
-          errorAlert.classList.add('error-alert-active');
-          errorAlertClose.addEventListener('click', () => {
-            errorAlert.classList.remove('error-alert-active');
-          })
+          badExecution(error);
         });
       } else {
         event.preventDefault();
@@ -585,28 +583,21 @@ window.addEventListener('DOMContentLoaded', () => {
       if (formElements[0].value !== '' &&
       formElements[1].value !== '' &&
       formElements[2].value !== '') {
+
         postData(body)
-          .then(() => {
+          .then((response) => {
+            if (response.status !== 200) {
+              throw new Error('status network not 200')
+            }
             formElements.forEach(item => {
               item.value = '';
             });
-            preLoader.style.display = 'none';
-            svgLoaderContainer.style.display = 'block';
-            checkMarkLoader.classList.add(checkMarkClassName);
-            setTimeout(function(){      
-              checkMarkLoader.classList.remove(checkMarkClassName);
-              svgLoaderContainer.style.display = 'none';
-              document.querySelector('.popup').style.display = 'none';
-            }, 1700); 
+            successfulExecution();
+            document.querySelector('.popup').style.display = 'none';
           })
           .catch(error => {
-            preLoader.style.display = 'none';
-            console.error(error);
-            errorAlert.classList.add('error-alert-active');
+            badExecution(error);
             document.querySelector('.popup').style.display = 'none';
-            errorAlertClose.addEventListener('click', () => {
-              errorAlert.classList.remove('error-alert-active');
-            })
           })
       } else {
         event.preventDefault();
@@ -615,23 +606,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     const postData = (body) => {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => {
-          preLoader.style.display = 'block';
-          if (request.readyState !== 4 ) {
-            return;
-          }
-          if (request.status === 200) {
-            resolve(request.status);
-          } else {
-            reject(request.statusText);
-          }
-        });
-        request.open('POST', './server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-        request.send(JSON.stringify(body));
-      })
+      preLoader.style.display = 'block';
+      return fetch('./server.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
     }
   }
 
