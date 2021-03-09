@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
                   resolve(data);
                 }
               } else {
-                reject(error);
+                reject(Error);
               }
           });
         })
@@ -36,9 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       })
       .catch((error) => {
+        console.log(error);
         output.innerHTML = error;
       })
 
     });
-
+    
 });
