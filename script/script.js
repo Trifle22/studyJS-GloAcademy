@@ -505,28 +505,29 @@ window.addEventListener('DOMContentLoaded', () => {
       if (formElements[0].value !== '' &&
       formElements[1].value !== '' &&
       formElements[2].value !== '') {
-        postData(body, 
-          () => {
-            formElements.forEach(item => {
-              item.value = '';
-            })
-            preLoader.style.display = 'none';
-            svgLoaderContainer.style.display = 'block';
-            checkMarkLoader.classList.add(checkMarkClassName);
-            setTimeout(function(){
-              checkMarkLoader.classList.remove(checkMarkClassName);
-              svgLoaderContainer.style.display = 'none';
-            }, 1700);
-          }, 
-          (error) => {
-            console.error(error);
-            preLoader.style.display = 'none';
-            console.log(error);
-            errorAlert.classList.add('error-alert-active');
-            errorAlertClose.addEventListener('click', () => {
-              errorAlert.classList.remove('error-alert-active');
-            })
-          });
+        postData(body)
+        .then((status) => {
+          console.log(status);
+          formElements.forEach(item => {
+            item.value = '';
+          })
+          preLoader.style.display = 'none';
+          svgLoaderContainer.style.display = 'block';
+          checkMarkLoader.classList.add(checkMarkClassName);
+          setTimeout(function(){
+            checkMarkLoader.classList.remove(checkMarkClassName);
+            svgLoaderContainer.style.display = 'none';
+          }, 1700);
+        })
+        .catch(error => {
+          console.error(error);
+          preLoader.style.display = 'none';
+          console.log(error);
+          errorAlert.classList.add('error-alert-active');
+          errorAlertClose.addEventListener('click', () => {
+            errorAlert.classList.remove('error-alert-active');
+          })
+        });
       } else {
         event.preventDefault();
         alert('Введите корректные данные во все поля формы');
@@ -545,28 +546,28 @@ window.addEventListener('DOMContentLoaded', () => {
       formElements[1].value !== '' &&
       formElements[2].value !== '' &&
       formElements[3].value !== '') {
-        postData(body, 
-          () => {
-            formElements.forEach(item => {
-              item.value = '';
-            })
-            preLoader.style.display = 'none';
-            svgLoaderContainer.style.display = 'block';
-            checkMarkLoader.classList.add(checkMarkClassName);
-            setTimeout(function(){      
-              checkMarkLoader.classList.remove(checkMarkClassName);
-              svgLoaderContainer.style.display = 'none';
-            }, 1700); 
-          }, 
-          (error) => {
-            console.error(error);
-            preLoader.style.display = 'none';
-            console.log(error);
-            errorAlert.classList.add('error-alert-active');
-            errorAlertClose.addEventListener('click', () => {
-              errorAlert.classList.remove('error-alert-active');
-            })
-          });
+        postData(body)
+        .then(() => {
+          formElements.forEach(item => {
+            item.value = '';
+          })
+          preLoader.style.display = 'none';
+          svgLoaderContainer.style.display = 'block';
+          checkMarkLoader.classList.add(checkMarkClassName);
+          setTimeout(function(){      
+            checkMarkLoader.classList.remove(checkMarkClassName);
+            svgLoaderContainer.style.display = 'none';
+          }, 1700); 
+        })
+        .catch(error => {
+          console.error(error);
+          preLoader.style.display = 'none';
+          console.log(error);
+          errorAlert.classList.add('error-alert-active');
+          errorAlertClose.addEventListener('click', () => {
+            errorAlert.classList.remove('error-alert-active');
+          })
+        });
       } else {
         event.preventDefault();
         alert('Введите корректные данные во все поля формы');
@@ -584,8 +585,8 @@ window.addEventListener('DOMContentLoaded', () => {
       if (formElements[0].value !== '' &&
       formElements[1].value !== '' &&
       formElements[2].value !== '') {
-        postData(body, 
-          () => {
+        postData(body)
+          .then(() => {
             formElements.forEach(item => {
               item.value = '';
             });
@@ -597,8 +598,8 @@ window.addEventListener('DOMContentLoaded', () => {
               svgLoaderContainer.style.display = 'none';
               document.querySelector('.popup').style.display = 'none';
             }, 1700); 
-          }, 
-          (error) => {
+          })
+          .catch(error => {
             preLoader.style.display = 'none';
             console.error(error);
             errorAlert.classList.add('error-alert-active');
@@ -606,29 +607,31 @@ window.addEventListener('DOMContentLoaded', () => {
             errorAlertClose.addEventListener('click', () => {
               errorAlert.classList.remove('error-alert-active');
             })
-          });
+          })
       } else {
         event.preventDefault();
         alert('Введите корректные данные во все поля формы');
       }
     });
 
-    const postData = (body, outputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => {
-        preLoader.style.display = 'block';
-        if (request.readyState !== 4 ) {
-          return;
-        }
-        if (request.status === 200) {
-          outputData();
-        } else {
-          errorData(request.status)
-        }
-      });
-      request.open('POST', './server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
-      request.send(JSON.stringify(body));
+    const postData = (body) => {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => {
+          preLoader.style.display = 'block';
+          if (request.readyState !== 4 ) {
+            return;
+          }
+          if (request.status === 200) {
+            resolve(request.status);
+          } else {
+            reject(request.statusText);
+          }
+        });
+        request.open('POST', './server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
+        request.send(JSON.stringify(body));
+      })
     }
   }
 
