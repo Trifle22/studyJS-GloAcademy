@@ -1,0 +1,22 @@
+{
+  "name": "studyjs-gloacademy",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "watch": "webpack --watch"
+    },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trifle22/studyJS-GloAcademy.git"
+  },
+  "author": "trifle22",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trifle22/studyJS-GloAcademy/issues"
+  },
+  "homepage": "https://github.com/Trifle22/studyJS-GloAcademy#readme",
+  "devDependencies": {
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  }
+}
