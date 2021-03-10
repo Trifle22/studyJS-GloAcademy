@@ -485,6 +485,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const form1 = document.getElementById('form1');
     const form2 = document.getElementById('form2');
     const form3 = document.getElementById('form3');
+    const forms = document.querySelectorAll('form');
     const preLoader = document.querySelector('.loader-container');
     const svgLoaderContainer = document.querySelector('.svg-loader-container');
     const checkMarkClassName = 'animate';
@@ -493,117 +494,63 @@ window.addEventListener('DOMContentLoaded', () => {
     const errorAlertClose = document.querySelector('.error-alert-close');
 
 
-    const successfulExecution = () => {
+    const successfulExecution = (target) => {
       preLoader.style.display = 'none';
       svgLoaderContainer.style.display = 'block';
       checkMarkLoader.classList.add(checkMarkClassName);
       setTimeout(function(){      
         checkMarkLoader.classList.remove(checkMarkClassName);
         svgLoaderContainer.style.display = 'none';
-      }, 1700); 
+        if (target.id === 'form3') {
+          document.querySelector('.popup').style.display = 'none';
+        }
+      }, 1700);
+
     }
-    const badExecution = (error) => {
+    const badExecution = (error, target) => {
       console.error(error);
       preLoader.style.display = 'none';
       errorAlert.classList.add('error-alert-active');
       errorAlertClose.addEventListener('click', () => {
         errorAlert.classList.remove('error-alert-active');
       })
+      if (target.id === 'form3') {
+        document.querySelector('.popup').style.display = 'none';
+      }
     }
 
-    form1.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const formElements = [...form1.elements].filter(item => item.tagName.toLowerCase() !== 'button');
-      const formData = new FormData(form1);
-      let body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
-      });
-      if (formElements[0].value !== '' &&
-      formElements[1].value !== '' &&
-      formElements[2].value !== '') {
-        postData(body)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error('status network not 200')
-          }
-          formElements.forEach(item => {
-            item.value = '';
-          })
-          successfulExecution();
-        })
-        .catch(error => {
-          badExecution(error);
-        });
-      } else {
+    forms.forEach(form => {
+      form.addEventListener('submit', (event) => {
+        const target = event.target;
         event.preventDefault();
-        alert('Введите корректные данные во все поля формы');
-      }
-    });
-
-    form2.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const formElements = [...form2.elements].filter(item => item.tagName.toLowerCase() !== 'button');
-      const formData = new FormData(form2);
-      let body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
-      });
-      if (formElements[0].value !== '' &&
-      formElements[1].value !== '' &&
-      formElements[2].value !== '' &&
-      formElements[3].value !== '') {
-        postData(body)
-        .then((response) => {
-          if (response.status !== 200) {
-            throw new Error('status network not 200')
-          }
-          formElements.forEach(item => {
-            item.value = '';
-          })
-          successfulExecution();
-        })
-        .catch(error => {
-          badExecution(error);
+        const formElements = [...target.elements].filter(item => item.tagName.toLowerCase() !== 'button');
+        const formData = new FormData(target);
+        let body = {};
+        formData.forEach((value, key) => {
+          body[key] = value;
         });
-      } else {
-        event.preventDefault();
-        alert('Введите корректные данные во все поля формы');
-      }
-    });
-
-    form3.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const formElements = [...form3.elements].filter(item => item.tagName.toLowerCase() !== 'button');
-      const formData = new FormData(form3);
-      let body = {};
-      formData.forEach((value, key) => {
-        body[key] = value;
-      });
-      if (formElements[0].value !== '' &&
-      formElements[1].value !== '' &&
-      formElements[2].value !== '') {
-
-        postData(body)
+        if (formElements[0].value !== '' &&
+        formElements[1].value !== '' &&
+        formElements[2].value !== '') {
+          postData(body)
           .then((response) => {
             if (response.status !== 200) {
               throw new Error('status network not 200')
             }
             formElements.forEach(item => {
               item.value = '';
-            });
-            successfulExecution();
-            document.querySelector('.popup').style.display = 'none';
+            })
+            successfulExecution(target);
           })
           .catch(error => {
-            badExecution(error);
-            document.querySelector('.popup').style.display = 'none';
-          })
-      } else {
-        event.preventDefault();
-        alert('Введите корректные данные во все поля формы');
-      }
-    });
+            badExecution(error, target);
+          });
+        } else {
+          event.preventDefault();
+          alert('Введите корректные данные во все поля формы');
+        }
+        })
+    })
 
     const postData = (body) => {
       preLoader.style.display = 'block';
