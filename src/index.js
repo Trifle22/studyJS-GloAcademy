@@ -1,15 +1,15 @@
 
-import countTimer from './modules/countTimer';
-import scrollToAnchors from './modules/scrollToAnchors';
-import toggleMenu from './modules/toggleMenu';
-import togglePopup from './modules/togglePopup';
-import tabs from './modules/tabs';
-import slider from './modules/slider';
-import replacePhoto from './modules/replacePhoto';
-import calcValidate from './modules/calcValidate';
-import formsTextValidate from './modules/formsTextValidate';
-import calculator from './modules/calculator';
-import sendForm from './modules/sendForm';
+import countTimer from './modules/countTimer.js';
+import scrollToAnchors from './modules/scrollToAnchors.js';
+import toggleMenu from './modules/toggleMenu.js';
+import togglePopup from './modules/togglePopup.js';
+import tabs from './modules/tabs.js';
+import slider from './modules/slider.js';
+import replacePhoto from './modules/replacePhoto.js';
+import calcValidate from './modules/calcValidate.js';
+import formsTextValidate from './modules/formsTextValidate.js';
+import calculator from './modules/calculator.js';
+import sendForm from './modules/sendForm.js';
 
 
 
