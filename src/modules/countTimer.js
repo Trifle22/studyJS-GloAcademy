@@ -34,24 +34,21 @@ function countTimer(deadline) {
     timerHours.textContent = timer.hoursRemaining;
     timerMinutes.textContent = timer.minutesRemaining;
     timerSeconds.textContent = timer.secondsRemaining;
+
+    if (timer.timeRemaining > 0) {
+      const intervalTimer = setTimeout(updateClock, 1000);
+    } else {
+      timerHours.textContent = '00';
+      timerMinutes.textContent = '00';
+      timerSeconds.textContent = '00';
+      timerHours.style.color = 'red';
+      timerMinutes.style.color = 'red';
+      timerSeconds.style.color = 'red';
+      clearInterval(intervalTimer);
+    }
   }
 
   updateClock();
-
-  const intervalTimer = setInterval(countTimer, 1000, deadline);
-
-  if (new Date(deadline).getTime() - new Date().getTime() <= 0) {
-  timerHours.textContent = '00';
-  timerMinutes.textContent = '00';
-  timerSeconds.textContent = '00';
-  timerHours.style.color = 'red';
-  timerMinutes.style.color = 'red';
-  timerSeconds.style.color = 'red';
-  clearInterval(intervalTimer);
-  }
 }
 
 export default countTimer;
-
-
-
