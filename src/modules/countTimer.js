@@ -44,7 +44,6 @@ function countTimer(deadline) {
       timerHours.style.color = 'red';
       timerMinutes.style.color = 'red';
       timerSeconds.style.color = 'red';
-      clearInterval(intervalTimer);
     }
   }
 
