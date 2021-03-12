@@ -14,7 +14,7 @@ import sendForm from './modules/sendForm.js';
 
 
   //count timer 
-  countTimer('12 march 2021');
+  countTimer('13 march 2021');
 
   // scrollToAnchors
   scrollToAnchors();
