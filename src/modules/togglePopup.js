@@ -4,7 +4,7 @@ const togglePopup = () => {
 
   popupBtn.forEach(item => {
     item.addEventListener('click', () => {
-      if (screen.width >= 768) {
+      if (document.body.clientWidth >= 768) {
         const start = Date.now();
         const timer = setInterval(() => {
           const timePassed = Date.now() - start;
