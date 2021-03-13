@@ -55,11 +55,24 @@ const calculator = (price = 100) => {
         }
       };
 
-      if (totalValue.textContent > total) {
-        animateValue(totalValue, total, false, 50, 1);
-      } else {
-        animateValue(totalValue, total, true, 50, 1);
+      function startAnimationCalculator() {
+        let animationSpeed = 0;
+        if (Math.abs(total - parseFloat(totalValue.textContent)) > 15000) {
+          animationSpeed = 1000;
+        } else {
+          animationSpeed = 150;
+        }
+  
+        if (totalValue.textContent > total) {
+          animateValue(totalValue, total, false, animationSpeed, 1);
+        } else {
+          animateValue(totalValue, total, true, animationSpeed, 1);
+        }
       }
+
+      startAnimationCalculator();
+
+
     }
 
   };
